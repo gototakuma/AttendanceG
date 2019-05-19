@@ -3,11 +3,12 @@
   <table class="table-bordered table-condensed">
     <tr>
       <td>時間管理表</td>
-      <td>指定勤務時間</td>
-      <td>基本時間</td>
+      <td>指定勤務時間:<%= @user.work_time.strftime("%H:%M") %></td>
+      <td>基本時間:<%= @user.basic_time.strftime("%H:%M") %></td>
       <td>初日</td>
     </tr>
   </table>
+  <div class="table2">
   <table class="table-bordered table-condensed">
     <tr>
       <td class="a">所属:<%= @user.belongs %></td>
@@ -17,5 +18,41 @@
       <td>出勤日数</td>
       <td class="c">締め</td>
     </tr>
+  </table>
+  </div>
+  
+  <div class="button1">
+    <input type="button" value="勤怠の編集" >
+  </div>
+    
+  <table class="table-bordered table-condensed">
+    <tr>
+      <td rowspan="2">日付</td>
+      <td rowspan="2">曜日</td>
+      <td colspan="3">出社</td>
+      <td colspan="3">退社</td>
+      <td rowspan="2">在社時間</td>
+      <td rowspan="2">備考</td>
+      <td rowspan="2">残業指示</td>
+      <td rowspan="2">指示者</td>
+    </tr>
+    <tr>
+      <td>時</td>
+      <td>分</td>
+      <td></td>
+      <td>時</td>
+      <td>分</td>
+      <td></td>
+    </tr>
+  </table>
+  
+  <table class="table-striped">
+    <tbody>
+      <tr>
+        <td>名前</td>
+        <td>時間</td>
+        <td>日付</td>
+      </tr>
+    </tbody>
   </table>
 </div>
