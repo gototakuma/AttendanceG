@@ -5,7 +5,11 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
+    @t = Date.today
+    @ftime= @t.beginning_of_month
+    @ltime = @ftime.end_of_month
   end
+    
   
   def index
     @users = User.paginate(page: params[:page])

@@ -25,7 +25,8 @@
     <input type="button" value="勤怠の編集" >
   </div>
     
-  <table class="table-bordered table-condensed">
+  <table class="table-bordered table-striped table-condensed">
+    <thead>
     <tr>
       <td rowspan="2">日付</td>
       <td rowspan="2">曜日</td>
@@ -42,15 +43,24 @@
       <td>分</td>
       <td></td>
     </tr>
-  </table>
+    </thead>
   
-  <table class="table-striped">
     <tbody>
+      <% (@ftime..@ltime).each do |day| %>
       <tr>
-        <td>名前</td>
-        <td>時間</td>
-        <td>日付</td>
+        <td><%= day.to_s(:date) %></td>
+        <td><%= %w{日 月 火 水 木 金 土}[day.wday] %></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
       </tr>
+      <%end%>
     </tbody>
   </table>
 </div>
