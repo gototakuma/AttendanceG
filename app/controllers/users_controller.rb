@@ -5,8 +5,11 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
-    @t = Date.today
-    @ftime= @t.beginning_of_month
+    if params[:ftime].nil?
+      @ftime = Date.today.beginning_of_month
+    else
+      @ftime = Date.parse(params[:ftime])
+    end
     @ltime = @ftime.end_of_month
     (@ftime..@ltime).each do |day|
       unless @user.attendances.any?{|attendance| attendance.worked_on == day}
@@ -14,7 +17,7 @@ class UsersController < ApplicationController
         record.save
       end
     end
-    @dates = @user.attendances.where('worked_on >= ? and worked_on <= ?',@ftime,@ltime)
+    @dates = @user.attendances.where('worked_on >= ? and worked_on <= ?',@ftime,@ltime).order('worked_on')
   end
     
   

@@ -2,7 +2,10 @@
 <div>
   <table class="table-bordered table-condensed">
     <tr>
-      <td>時間管理表</td>
+      <td>
+        <%= link_to "←", user_path(params: {id: @user.id, ftime: @ftime.prev_month}), class: "btn btn-xs btn-primary" %>
+          &emsp;<%= @ftime.to_s(:year_month) %> 時間管理表 &emsp;
+        <%= link_to "→", user_path(params: {id: @user.id, ftime: @ftime.next_month}), class: "btn btn-xs btn-primary" %></td>
       <td>指定勤務時間:<%= @user.work_time.strftime("%H:%M") %></td>
       <td>基本時間:<%= @user.basic_time.strftime("%H:%M") %></td>
       <td>初日</td>
@@ -46,9 +49,9 @@
     </thead>
   
     <tbody>
-      <% (@ftime..@ltime).each do |day| %>
+      <% @dates.each do |day| %>
       <tr>
-        <td><%= day.to_s(:date) %></td>
+        <td><%= day.worked_on.to_s(:date) %></td>
         <td><%= %w{日 月 火 水 木 金 土}[day.worked_on.wday] %></td>
         <td></td>
         <td></td>
