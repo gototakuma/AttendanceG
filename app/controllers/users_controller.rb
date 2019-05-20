@@ -8,6 +8,13 @@ class UsersController < ApplicationController
     @t = Date.today
     @ftime= @t.beginning_of_month
     @ltime = @ftime.end_of_month
+    (@ftime..@ltime).each do |day|
+      unless @user.attendances.any?{|attendance| attendance.worked_on == day}
+        record = @user.attendances.build(worked_on: day)
+        record.save
+      end
+    end
+    @dates = @user.attendances.where('worked_on >= ? and worked_on <= ?',@ftime,@ltime)
   end
     
   
