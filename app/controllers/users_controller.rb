@@ -18,7 +18,9 @@ class UsersController < ApplicationController
       end
     end
     @dates = @user.attendances.where('worked_on >= ? and worked_on <= ?',@ftime,@ltime).order('worked_on')
+    @worked_sum = @dates.where.not(started_at: nil).count
   end
+  
     
   
   def index
@@ -71,6 +73,7 @@ class UsersController < ApplicationController
       render 'edit_basic_info'
     end
   end
+  
   
   private
   

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'attendances/create'
+
   get 'sessions/new'
 
   root 'first#home'
@@ -9,5 +11,7 @@ Rails.application.routes.draw do
   get '/edit-basic-info/:id', to: 'users#edit_basic_info', as: :basic_info
   patch 'update-basic-info', to: 'users#update_basic_info'
   
-  resources :users
+  resources :users do
+    resources :attendances, only: :create
+  end
 end
