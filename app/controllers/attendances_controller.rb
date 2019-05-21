@@ -16,7 +16,8 @@ class AttendancesController < ApplicationController
   
   def edit
     @user = User.find(params[:id])
-    @ftime= Date.parse(params[:date])
+    @ftime = Date.parse(params[:date])
+    @ltime = @ftime.end_of_month
+    @dates = user_attendances_month_date
   end
-  
 end
