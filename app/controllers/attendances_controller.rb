@@ -13,4 +13,10 @@ class AttendancesController < ApplicationController
     end
     redirect_to @user
   end
+  
+  def edit
+    @user = User.find(params[:id])
+    @ftime= Date.parse(params[:date])
+  end
+  
 end
