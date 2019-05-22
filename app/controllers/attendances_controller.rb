@@ -20,4 +20,13 @@ class AttendancesController < ApplicationController
     @ltime = @ftime.end_of_month
     @dates = user_attendances_month_date
   end
+  
+  def update
+  end
+  
+  private
+  
+  def attendances_params
+    params.permit(attendances: [:started_at,:finished_at,:note])[:attendances]
+  end
 end
