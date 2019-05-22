@@ -1,7 +1,8 @@
 <% provide(:title,"勤怠編集" ) %>
 <div>
   <h1>勤怠編集画面</h1>
-  <table class = "table-bordered table-striped table-condensed">
+  <%= form_for(@user, url: update_attendances_path, method: :patch) do |f| %>
+   <table class = "table-bordered table-striped table-condensed">
     <thead>
       <tr>
         <th>日付</th>
@@ -23,7 +24,11 @@
           <td></td>
         </tr>
       <% end %>
-    </tbody>
-  </table>
-  <%= link_to "キャンセル", user_path(@user,params:{ftime: @ftime}), class: "btn btn-default btn-block" %>
+     </tbody>
+    </table>
+  <div class="btn-attendances-update">
+    <%= f.submit "更新", class: "btn btn-primary" %>
+    <%= link_to "キャンセル", user_path(@user,params:{ftime: @ftime}), class: "btn btn-default btn-block" %>
+  </div>
+  <%end%>
 </div>
