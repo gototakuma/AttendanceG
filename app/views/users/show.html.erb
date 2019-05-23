@@ -8,7 +8,7 @@
         <%= link_to "→", user_path(params: {id: @user.id, ftime: @ftime.next_month}), class: "btn btn-xs btn-primary" %></td>
       <td>指定勤務時間:<%= @user.work_time.strftime("%H:%M") %></td>
       <td>基本時間:<%= @user.basic_time.strftime("%H:%M") %></td>
-      <td>初日</td>
+      <td>初日<%= @ftime.to_s(:date) %></td>
     </tr>
   </table>
   <div class="table2">
@@ -19,7 +19,7 @@
       <td>コード</td>
       <td></td>
       <td>出勤日数: <%= @worked_sum %>日</td>
-      <td class="c">締め</td>
+      <td class="c">締め<%= @ltime.to_s(:date) %></td>
     </tr>
   </table>
   </div>
@@ -73,7 +73,7 @@
             <% @total_seconds = @total_seconds.to_i + seconds %>
           <%end%>
         </td>
-        <td></td>
+        <td><%= day.note %></td>
       </tr>
       <%end%>
     </tbody>
