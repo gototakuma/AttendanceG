@@ -24,8 +24,9 @@
   </table>
   </div>
   
-  
-  <%= link_to "勤怠を編集", edit_attendances_path(@user, @ftime), class: "btn btn-primary"%>
+  <% if current_user.admin? %>
+    <%= link_to "勤怠を編集", edit_attendances_path(@user, @ftime), class: "btn btn-primary"%>
+  <%end%>
     
   <table class="table-bordered table-striped table-condensed">
     <thead>
