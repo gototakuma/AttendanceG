@@ -23,13 +23,16 @@ class AttendancesController < ApplicationController
   
   def update
     @user = User.find(params[:id])
-    if timeerror
-        attendances_params.each do |id,item|
-          attendance = Attendance.find(id)
-          attendance.update_attributes(item)
-         end
-      flash[:success] = "勤怠情報を更新しました"
-      redirect_to user_path(@user, params:{ftime: params[:date]}) and return
+    if attendances_invalid?
+      attendances_params.each do |id, item|
+        attendance = Attendance.find(id)
+        attendance.update_attributes(item)
+      end
+      flash[:success] = '勤怠情報を更新しました。'
+      redirect_to user_path(@user, params:{first_day: params[:date]})
+    else
+      flash[:danger] = "不正な時間入力がありました、再入力してください。"
+      redirect_to edit_attendances_path(@user, params[:date])
     end
   end
   
