@@ -18,7 +18,17 @@
        <%= fields_for "attendances[]", day do |af| %>
         <tr>
           <td><%= day.worked_on.to_s(:date) %></td>
-          <td><%= %w{日 月 火 水 木 金 土}[day.worked_on.wday] %></td>
+          <td>
+            <% week_name = %w[日 月 火 水 木 金 土] %>
+              <% str = week_name[day.worked_on.wday] %>
+             <% if day.worked_on.wday == 0 %>
+              <font color="red"><%=week_name[day.worked_on.wday]%></font>
+             <% elsif day.worked_on.wday == 6 %>
+              <font color="blue"><%=week_name[day.worked_on.wday]%></font>
+             <%else%>
+               <%= str%>
+            <%end%>
+          </td>
           <td><%= af.time_field :started_at, class: "form-control" %></td>
           <td><%= af.time_field :finished_at, class: "form-control" %></td>
           <td>
