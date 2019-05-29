@@ -9,4 +9,11 @@ class Attendance < ApplicationRecord
        errors.add(:finished_at, "出勤時間がありません。")
       end
     end
+    
+  validate :finished_at_started_faster
+    def finished_at_started_faster
+      if  started_at.present? && started_at > finished_at
+        errors.add(:finished_at, "出勤時間の方が早いです。")
+      end
+    end
 end  
