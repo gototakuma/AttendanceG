@@ -192,3 +192,29 @@ footer ul li {
   float: left;
   margin-left: 15px;
 }
+
+#user_search {
+  position: right;
+  margin-left: 80%;
+}
+
+.search_form {
+  list-style: none;
+  padding: 0;
+  font-size: 0;
+}
+
+.search_form li{
+  display: inline-block;
+  font-size: 20px;
+}
+
+.search_field {
+  width: 100%;
+  
+}
+
+
+.search_button {
+  width: 100%;
+}

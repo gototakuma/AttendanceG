@@ -1,10 +1,19 @@
 <% provide(:title,'一覧') %>
 <h1>ユーザー覧</h1>
 
-<%= will_paginate %>
+<%= search_form_for @q, url: users_path do |f| %>
+  <%= f.label :name_cont, "ユーザ名検索"%>
+  <ul class = "search_form">
+    <li><div class="search_field"><%= f.text_field :name_cont, class: "form-control" ,placeholder: 'キーワードを入力...'%></div></li>
+    <li><div class="search_button"><%= f.submit "検索", class: "btn btn-primary"%></div></li>
+  </ul>
+<%end%>
+
+<%= will_paginate @search %>
 
 <ul class="users">
-  <%= render @users %>
+  <%= render @search %>
+  </div>
 </ul>
 
-<%= will_paginate %>
+<%= will_paginate @search %>
