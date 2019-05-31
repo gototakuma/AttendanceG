@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   before_action :logged_in_user, only: [:index,:show,:edit,:update,:destroy]
-  before_action :correct_user, only: [:show,:edit,:update]
   before_action :admin_user, only: [:destroy,:edit_basic_info,:update_basic_info]
+  before_action :correct_user, only: [:show,:edit,:update]
+  
   
   def show
     @user = User.find(params[:id])
@@ -97,7 +98,7 @@ class UsersController < ApplicationController
   
   def correct_user
     @user = User.find(params[:id])
-    unless current_user?(@user) 
+    unless current_user?(@user) || current_user.admin?
       flash[:danger] = "他人のデータは観覧できません"
       redirect_to(root_url) 
     end
