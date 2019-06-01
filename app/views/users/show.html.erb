@@ -24,10 +24,12 @@
   </table>
   </div>
   
+  <%= link_to "【残業申請のお知らせ】", '#' %><br>
+  
   <% if current_user|| current_user.admin? %>
     <%= link_to "勤怠を編集", edit_attendances_path(@user, @ftime), class: "btn btn-primary"%>
   <%end%>
-    
+  
   <table class="table-bordered table-striped table-condensed">
     <thead>
     <tr>
