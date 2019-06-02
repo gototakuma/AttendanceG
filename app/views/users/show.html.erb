@@ -54,7 +54,7 @@
     <tbody>
       <% @dates.each do |day| %>
       <tr>
-        <td width="10%"><%= link_to "残業申請", '#', class: "btn btn-primary" %></td>
+        <td width="10%"><%= link_to "残業申請", new_overtime_path, class: "btn btn-primary" %></td>
         <td width="5%"><%= day.worked_on.to_s(:date) %></td>
         <td width ="5%">
          <% week_name = %w[日 月 火 水 木 金 土] %>

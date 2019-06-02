@@ -14,6 +14,13 @@ class AttendancesController < ApplicationController
     redirect_to @user
   end
   
+  def new_overtime
+    @user = User.find(params[:id])
+    @ftime = Date.today.beginning_of_month
+    @ltime = @ftime.end_of_month
+    @dates = user_attendances_month_date
+  end
+  
   def edit
     @user = User.find(params[:id])
     @ftime = Date.parse(params[:date])
