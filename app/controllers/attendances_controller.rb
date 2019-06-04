@@ -43,6 +43,9 @@ class AttendancesController < ApplicationController
     end
   end
   
+  def create_overtime
+  end
+  
   private
   
   def attendances_params
