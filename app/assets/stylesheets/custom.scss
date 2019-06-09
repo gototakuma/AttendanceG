@@ -219,3 +219,17 @@ footer ul li {
 .search_button {
   width: 100%;
 }
+
+
+.time_control, .text_field,{
+  display: flex;
+  width: auto;
+  margin-bottom: -15px;
+}
+.selectpicker {
+  margin-bottom: 1px;
+}
+
+.check_box {
+  margin-left: 10px;
+}

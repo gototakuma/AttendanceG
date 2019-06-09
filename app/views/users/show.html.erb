@@ -53,9 +53,12 @@
   
     <tbody>
       <% @dates.each do |day| %>
+        <%= fields_for"attendances[]", day do |af| %>
       <tr>
         <td width="10%">
-          
+          <button type="button" class="btn btn-primary" data-toggle="modal" 
+          data-target="#user-modal">残業申請</button>
+          <div class="modal fade" id="user-modal" tabindex="-1">
           <div class="modal-dialog" role="document">
            <div class="modal-content">
             <div class="modal-header">
@@ -86,16 +89,34 @@
                       <%= str%>
                     <%end%>
                   </td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                  <td>
+                    <div class="time_control">
+                      <%= af.time_select :over_time, class: "form-control" %>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="check_box">
+                      <%= af.check_box :over_time%>
+                    </div>
+                  </td>
+                  <td><div class="text_field"%><%= af.text_field :note, class: "form-control" %></div></td>
+                  <td>
+                    <div class="selectpicker">
+                    <select class="selectpicker">
+                      <option></option>
+                      <option>上長1</option>
+                      <option>上長2</option>
+                      <option>上長3</option>
+                    </select>
+                    </div>
+                    </td>
                 </tr>
               </tbody>
             </table>  
           <div class="modal-footer">
             <%= f.submit "変更を送信する", class: "btn btn-primary" %>
           </div>
+          <%end%>
         <%end%>
         </div>
         </div>
