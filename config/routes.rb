@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'over_times/update'
+
+  get 'over_times/edit'
+
   get 'sessions/new'
 
   root 'first#home'

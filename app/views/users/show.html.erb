@@ -24,7 +24,8 @@
   </table>
   </div>
   
-  <%= link_to "【残業申請のお知らせ】", '#' %><br>
+  <%= link_to "【残業申請のお知らせ】", '#' %>
+  <%= link_to "【勤怠変更申請のお知らせ】", '#' %><br>
   
   <% if current_user|| current_user.admin? %>
     <%= link_to "勤怠を編集", edit_attendances_path(@user, @ftime), class: "btn btn-primary"%>
@@ -91,7 +92,7 @@
                   </td>
                   <td>
                     <div class="time_control">
-                      <%= af.time_select :over_time, class: "form-control" %>
+                      <%= af.time_select :over_time,:include_blank => true, class: "form-control" %>
                     </div>
                   </td>
                   <td>
