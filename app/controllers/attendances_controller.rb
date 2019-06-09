@@ -14,6 +14,24 @@ class AttendancesController < ApplicationController
     redirect_to @user
   end
   
+  def show
+    @user = User.find(params[:id])
+    if params[:ftime].nil?
+      @ftime = Date.today.beginning_of_month
+    else
+      @ftime = Date.parse(params[:ftime])
+    end
+    @ltime = @ftime.end_of_month
+    (@ftime..@ltime).each do |day|
+      unless @user.attendances.any?{|attendance| attendance.worked_on == day}
+        record = @user.attendances.build(worked_on: day)
+        record.save
+      end
+    end
+    @dates = user_attendances_month_date
+    @worked_sum = @dates.where.not(started_at: nil).count
+  end
+  
   def new_overtime
     @user = User.find(params[:id])
     @ftime = Date.today.beginning_of_month
@@ -44,6 +62,7 @@ class AttendancesController < ApplicationController
   end
   
   def create_overtime
+    @user = User.find(params[:id])
   end
   
   private

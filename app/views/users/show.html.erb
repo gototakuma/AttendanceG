@@ -30,7 +30,7 @@
     <%= link_to "勤怠を編集", edit_attendances_path(@user, @ftime), class: "btn btn-primary"%>
   <%end%>
   
-  <table class="table-bordered table-striped table-condensed">
+  <table class="table-bordered table-striped table-condensed table-hover">
     <thead>
     <tr>
       <td rowspan="2">残業申請</td>
@@ -54,9 +54,55 @@
     <tbody>
       <% @dates.each do |day| %>
       <tr>
-        <td width="10%"><%= link_to "残業申請", create_overtime_path,remote: true, class: "btn btn-primary" %></td>
-        <div id="user-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
-        <td width="5%"><%= day.worked_on.to_s(:date) %></td>
+        <td width="10%">
+          
+          <div class="modal-dialog" role="document">
+           <div class="modal-content">
+            <div class="modal-header">
+             <h1>【残業申請】</h1>
+              <%= form_for(@user) do |f| %>
+            </dvi>
+            <div class="modal-body">
+              <table class = "table-bordered table-striped table-condensed">
+                <tr>
+                  <td>日付</td>
+                  <td>曜日</td>
+                  <td>終了予定時間</td>
+                  <td>翌日</td>
+                  <td>業務処理内容</td>
+                  <td>指示者確認㊞</td>
+                </tr>
+              <tbody>
+                <tr>
+                  <td><%=day.worked_on.to_s(:date)%></td>
+                  <td>
+                    <% week_name = %w[日 月 火 水 木 金 土] %>
+                     <% str = week_name[day.worked_on.wday] %>
+                    <% if day.worked_on.wday == 0 %>
+                      <font color="red"><%=week_name[day.worked_on.wday]%></font>
+                    <% elsif day.worked_on.wday == 6 %>
+                      <font color="blue"><%=week_name[day.worked_on.wday]%></font>
+                    <%else%>
+                      <%= str%>
+                    <%end%>
+                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>  
+          <div class="modal-footer">
+            <%= f.submit "変更を送信する", class: "btn btn-primary" %>
+          </div>
+        <%end%>
+        </div>
+        </div>
+        </div>
+        </div>
+        </td>
+        <td width="5%"><%=day.worked_on.to_s(:date)%></td>
         <td width ="5%">
          <% week_name = %w[日 月 火 水 木 金 土] %>
          <% str = week_name[day.worked_on.wday] %>

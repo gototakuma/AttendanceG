@@ -1,7 +1,16 @@
+<% @dates.each do |day| %>
+  <% @date = day.worked_on.to_s(:date) %>
+  <% week_name = %w[日 月 火 水 木 金 土] %>
+  <% @youbi = week_name[day.worked_on.wday] %>
+<%end%>
+  
 <div class="modal-dialog" role="document">
   <div class="modal-content">
     <div class="modal-header">
-    <h1>【残業申請】</h1>
+      <h1>【残業申請】</h1>
+        <%= form_for(@user, remote: true) do |f| %>
+    </dvi>
+    <div class="modal-body">
       <table class = "table-bordered table-striped table-condensed">
         <tr>
           <td>日付</td>
@@ -11,15 +20,21 @@
           <td>業務処理内容</td>
           <td>指示者確認㊞</td>
         </tr>
+      <tbody>
         <tr>
-          <td>
-          <td></td>
+          <td><%= @date %></td>
+          <td><%= @youbi %></td>
           <td></td>
           <td></td>
           <td></td>
           <td></td>
         </tr>
+      </tbody>
      </table>  
+     <div class="modal-footer">
+       <%= f.submit "変更を送信する", class: "btn btn-primary" %>
+     </div>
+     <%end%>
     </div>
   </div>
 </div>
