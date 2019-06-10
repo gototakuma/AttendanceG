@@ -24,8 +24,10 @@
   </table>
   </div>
   
-  <%= link_to "【残業申請のお知らせ】", '#' %>
+  <%= link_to "【残業申請のお知らせ】", '#' %><br>
   <%= link_to "【勤怠変更申請のお知らせ】", '#' %><br>
+  <%= link_to "【所属長承認申請のお知らせ】",'#'%><br>
+  <%= link_to "CSV", user_path(format: :csv), class: "btn btn-primary" %>
   
   <% if current_user|| current_user.admin? %>
     <%= link_to "勤怠を編集", edit_attendances_path(@user, @ftime), class: "btn btn-primary"%>
@@ -167,7 +169,22 @@
         <td colspan = "6"></td>
         <td><%= working_times_sum(@total_seconds.ceil_to(15.minutes)) unless @total_seconds.nil? %></td>
         <td></td>
+        <td></td>
       </tr>
     </tfoot>
   </table>
+    <%= form_for(@user) do |f| %>
+      <p class="p">所属長承認</p>
+      <div class="selectpicker">
+        <select class="selectpicker">
+          <option></option>
+          <option>上長1</option>
+          <option>上長2</option>
+          <option>上長3</option>
+        </select>
+      </div>
+      <div class="petition">
+        <%= f.submit "申請", class: "btn btn-primary" %>
+      </div>
+    <%end%>
 </div>
