@@ -60,8 +60,8 @@
       <tr>
         <td width="10%">
           <button type="button" class="btn btn-primary" data-toggle="modal" 
-          data-target="#user-modal">残業申請</button>
-          <div class="modal fade" id="user-modal" tabindex="-1">
+          data-target="#modal-<%=day.id %>" data-date="<%= day.worked_on.to_s(:date) %>">残業申請</button>
+          <div class="modal fade" id="modal-<%=day.id %>" tabindex="-1">
           <div class="modal-dialog" role="document">
            <div class="modal-content">
             <div class="modal-header">
@@ -80,7 +80,7 @@
                 </tr>
               <tbody>
                 <tr>
-                  <td><%=day.worked_on.to_s(:date)%></td>
+                  <td class="modal-date"><%= day.worked_on.to_s(:date) %></td>
                   <td>
                     <% week_name = %w[日 月 火 水 木 金 土] %>
                      <% str = week_name[day.worked_on.wday] %>
