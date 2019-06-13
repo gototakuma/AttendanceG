@@ -3,7 +3,16 @@ User.create!(name:  "管理者",
              belongs: "社長",
              password:              "password",
              password_confirmation: "password",
-             admin: true)
+             admin: true,
+             instructor: true)
+
+User.create!(name: "指示者",
+             email: "instructor@sample.com",
+             belongs: "取締役",
+             password: "password",
+             password_confirmation: "password",
+             admin: true,
+             instructor: true)
 
 59.times do |n|
   name  = Faker::Name.name

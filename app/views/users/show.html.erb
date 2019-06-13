@@ -102,14 +102,14 @@
                       <%= af.check_box :over_time%>
                     </div>
                   </td>
-                  <td><div class="text_field"%><%= af.text_field :note, class: "form-control" %></div></td>
+                  <td><div class="text_field"%><%= af.text_field :overtime_note,  class: "form-control" %></div></td>
                   <td>
                     <div class="selectpicker">
                     <select class="selectpicker">
                       <option></option>
-                      <option>上長1</option>
-                      <option>上長2</option>
-                      <option>上長3</option>
+                      <%= @instructor.each do |instructor| %>
+                        <option><%= instructor.name %></option>
+                      <%end%>
                     </select>
                     </div>
                     </td>
