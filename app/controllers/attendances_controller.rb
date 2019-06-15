@@ -61,13 +61,30 @@ class AttendancesController < ApplicationController
     end
   end
   
-  def create_overtime
+  def edit_overtime
     @user = User.find(params[:id])
   end
   
+  def update_overtime
+    @user = User.find(params[:id])
+    overtime_params.each do |id,item|
+      overtime = Attendance.find(id)
+      overtime.update_attributes(item)
+    end
+    if @user.update_attributes(overtime_params)
+      flash[:success] = "残業申請しました"
+      redirect_to @user
+    else
+      render '@user'
+    end
+  end
   private
   
   def attendances_params
     params.permit(attendances: [:started_at,:finished_at,:note])[:attendances]
+  end
+  
+  def overtime_params
+    params.permit(:over_time,:overtime_note,:instructor)
   end
 end
