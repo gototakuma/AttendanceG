@@ -113,16 +113,7 @@
                     </div>
                   </td>
                   <td><div class="text_field"%><%= af.text_field :overtime_note,  class: "form-control" %></div></td>
-                  <td>
-                    <div class="selectpicker">
-                    <select class="selectpicker">
-                      <option></option>
-                      <%= @instructor.each do |instructor| %>
-                        <option><%= instructor.name %></option>
-                      <%end%>
-                    </select>
-                    </div>
-                    </td>
+                  <td><%= f.collection_select :instructor,User.where(instructor: true),:id,:name%></td>
                 </tr>
               </tbody>
             </table>  
@@ -174,7 +165,7 @@
         <td><%= day.over_time.to_s(:min) if day.over_time.present?%></td>
         <td></td>
         <td><%= day.overtime_note %></td>
-        <td><%= @instructor.name%></td>
+        <td></td>
       </tr>
       <%end%>
     </tbody>

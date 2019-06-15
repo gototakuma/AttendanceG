@@ -41,6 +41,7 @@ class AttendancesController < ApplicationController
   
   def edit
     @user = User.find(params[:id])
+    @instructor = User.where(instructor: true)
     @ftime = Date.parse(params[:date])
     @ltime = @ftime.end_of_month
     @dates = user_attendances_month_date
@@ -48,6 +49,7 @@ class AttendancesController < ApplicationController
   
   def update
     @user = User.find(params[:id])
+    @instructor = User.where(instructor: true)
     if attendances_invalid?
       attendances_params.each do |id, item|
         attendance = Attendance.find(id)

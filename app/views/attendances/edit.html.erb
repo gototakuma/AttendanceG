@@ -52,16 +52,7 @@
             <%end%>
           </td>
           <td><%= af.text_field :note, class: "form-control" %></td>
-          <td>
-            <div class="selectpicker">
-              <select class="selectpicker">
-                <option></option>
-                <option>上長1</option>
-                <option>上長2</option>
-                <option>上長3</option>
-              </select>
-            </div>
-          </td>
+          <td><%= f.collection_select :instructor,User.where(instructor: true),:id,:name%></td>
         </tr>
       <% end %>
       <%end%>
