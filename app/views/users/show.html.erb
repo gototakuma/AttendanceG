@@ -20,7 +20,7 @@
       <td class="a">所属:<%= @user.belongs %></td>
       <td class="b">氏名: <%=@user.name %></td>
       <td>コード</td>
-      <td></td>
+      <td><%= @user.code %></td>
       <td>出勤日数: <%= @worked_sum %>日</td>
       <td class="c">締め<%= @ltime.to_s(:date) %></td>
     </tr>
