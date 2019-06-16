@@ -99,10 +99,14 @@ class UsersController < ApplicationController
   
   def correct_user
     @user = User.find(params[:id])
-    unless current_user?(@user) || current_user.admin?
+    unless current_user?(@user) || current_user.admin? || current_user.instructor?
       flash[:danger] = "他人のデータは観覧できません"
       redirect_to(root_url) 
     end
+  end
+  
+  def instructor_user
+    redirect_to(root_url) unless current_user.instructor?
   end
   
   def admin_user

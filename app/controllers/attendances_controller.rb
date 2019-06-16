@@ -32,12 +32,6 @@ class AttendancesController < ApplicationController
     @worked_sum = @dates.where.not(started_at: nil).count
   end
   
-  def new_overtime
-    @user = User.find(params[:id])
-    @ftime = Date.today.beginning_of_month
-    @ltime = @ftime.end_of_month
-    @dates = user_attendances_month_date
-  end
   
   def edit
     @user = User.find(params[:id])
@@ -65,15 +59,13 @@ class AttendancesController < ApplicationController
   
   def edit_overtime
     @user = User.find(params[:id])
+    @overtime = Attendance.find(params[:id])
   end
   
   def update_overtime
     @user = User.find(params[:id])
-    overtime_params.each do |id,item|
-      overtime = Attendance.find(id)
-      overtime.update_attributes(item)
-    end
-    if @user.update_attributes(overtime_params)
+    @overtime = Attendance.find(params[:id])
+    if @overtime.update_attributes(overtime_params)
       flash[:success] = "残業申請しました"
       redirect_to @user
     else
@@ -87,6 +79,6 @@ class AttendancesController < ApplicationController
   end
   
   def overtime_params
-    params.permit(:over_time,:overtime_note,:instructor)
+    params.require(:attendances).permit(:over_time,:overtime_note)
   end
 end

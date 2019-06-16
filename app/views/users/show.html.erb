@@ -6,7 +6,10 @@
         <%= link_to "←", user_path(params: {id: @user.id, ftime: @ftime.prev_month}), class: "btn btn-xs btn-primary" %>
           &emsp;<%= @ftime.to_s(:year_month) %> 時間管理表 &emsp;
         <%= link_to "→", user_path(params: {id: @user.id, ftime: @ftime.next_month}), class: "btn btn-xs btn-primary" %></td>
-      <td>指定勤務時間:<%= format_basic_time(@user.work_time) %></td>
+      <td>
+        指定勤務開始時間:<%= format_basic_time(@user.work_time) %><br>
+        指定勤務終了時間:<%= format_basic_time(@user.finish_time) %>
+        </td>
       <td>基本時間:<%= format_basic_time(@user.basic_time)%></td> 
       <td>初日<%= @ftime.to_s(:date) %></td>
     </tr>
@@ -23,11 +26,12 @@
     </tr>
   </table>
   </div>
-  
-  <%= link_to "【残業申請のお知らせ】", '#' %><br>
-  <%= link_to "【勤怠変更申請のお知らせ】", '#' %><br>
-  <%= link_to "【所属長承認申請のお知らせ】",'#'%><br>
-  <%= link_to "CSV", user_path(format: :csv), class: "btn btn-primary" %>
+  <% if current_user.instructor? %>
+    <%= link_to "【残業申請のお知らせ】", '#' %><br>
+    <%= link_to "【勤怠変更申請のお知らせ】", '#' %><br>
+    <%= link_to "【所属長承認申請のお知らせ】",'#'%><br>
+    <%= link_to "CSV", user_path(format: :csv), class: "btn btn-primary" %>
+  <%end%>
   
   <% if current_user|| current_user.admin? %>
     <%= link_to "勤怠を編集", edit_attendances_path(@user, @ftime), class: "btn btn-primary"%>

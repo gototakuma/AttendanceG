@@ -11,7 +11,7 @@ User.create!(name: "指示者",
              belongs: "取締役",
              password: "password",
              password_confirmation: "password",
-             admin: true,
+             admin: false,
              instructor: true)
 
 59.times do |n|
