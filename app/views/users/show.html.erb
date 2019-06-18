@@ -80,7 +80,7 @@
            <div class="modal-content">
             <div class="modal-header">
              <h1>【残業申請】</h1>
-              <%= form_for(@user, url: update_overtime_path) do |f| %>
+              <%= form_for(@user, url: update_overtime_path(params: {id: @user.id})) do |f| %>
             </dvi>
             <div class="modal-body">
               <table class = "table-bordered table-striped table-condensed">
@@ -167,9 +167,17 @@
         <td><%= day.note %></td>
         <td><%= day.over_time.to_s(:hour) if day.over_time.present?%></td>
         <td><%= day.over_time.to_s(:min) if day.over_time.present?%></td>
-        <td></td>
+        <td>
+          <% if day.over_time.present?%>
+            <%= overtimes_sub(day.over_time, @user.finish_time) %>
+          <%end%>
+        </td>
         <td><%= day.overtime_note %></td>
-        <td></td>
+        <td>
+          <% @instructor.each do |instructor| %>
+            <%= instructor.name %>
+          <%end%>
+        </td>
       </tr>
       <%end%>
     </tbody>
