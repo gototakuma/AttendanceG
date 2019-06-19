@@ -106,9 +106,9 @@
                       <%= str%>
                     <%end%>
                   </td>
-                  <td>
+                  <td class="modal-date">
                     <div class="time_control">
-                      <%= af.time_select :over_time,:include_blank => true, class: "form-control" %>
+                      <%= af.time_select :over_time,:default => Time.now, class: "form-control" %>
                     </div>
                   </td>
                   <td>

@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20190616050951) do
     t.datetime "basic_time", default: "2019-04-30 22:30:00"
     t.datetime "work_time", default: "2019-04-30 23:30:00"
     t.boolean "instructor", default: false
-    t.datetime "finish_time", default: "2019-05-01 08:30:00"
+    t.datetime "finish_time", default: "2019-06-19 08:30:00"
     t.integer "code"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
