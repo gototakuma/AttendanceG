@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   patch 'users/:id/attendances/:id/update_overtime', to: 'attendances#update_overtime', as: :update_overtime
   get 'users/:id/attendances/:date/edit', to: 'attendances#edit', as: :edit_attendances
   patch 'users/:id/attendances/:date/update', to: 'attendances#update', as: :update_attendances
+  get 'users/:id/attendances/:id/receive_overtime', to: 'attendances#receive_overtime', as: :receive_overtime
  
   resources :users do
     resources :attendances

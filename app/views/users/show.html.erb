@@ -27,7 +27,8 @@
   </table>
   </div>
   <% if current_user.instructor? %>
-    <%= link_to "【残業申請のお知らせ】", '#' %><br>
+    <%= link_to "【残業申請のお知らせ】", receive_overtime_path, remote: true%><br>
+    <div id="user-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
     <%= link_to "【勤怠変更申請のお知らせ】", '#' %><br>
     <%= link_to "【所属長承認申請のお知らせ】",'#'%><br>
     <%= link_to "CSV", user_path(format: :csv), class: "btn btn-primary" %>
@@ -72,7 +73,8 @@
       <% @dates.each do |day| %>
         <%= fields_for"attendances[]", day do |af| %>
       <tr>
-        <td width="10%">
+<!--Modal-->
+        <td width="10%"> 
           <button type="button" class="btn btn-primary" data-toggle="modal" 
           data-target="#modal-<%=day.id %>" data-date="<%= day.worked_on.to_s(:date) %>">残業申請</button>
           <div class="modal fade" id="modal-<%=day.id %>" tabindex="-1">
@@ -113,7 +115,7 @@
                   </td>
                   <td>
                     <div class="check_box">
-                      <%= af.check_box :over_time%>
+                      <%= f.check_box :box %>
                     </div>
                   </td>
                   <td><div class="text_field"%><%= af.text_field :overtime_note,  class: "form-control" %></div></td>
@@ -129,6 +131,7 @@
             </div>
            </div>
           </div>
+<!--Modal終了-->
         </td>
         <%end%>
         <td width="5%"><%=day.worked_on.to_s(:date)%></td>
@@ -143,6 +146,7 @@
             <%= str%>
          <%end%>
         </td>
+<!--【実績】-->
         <td><%= day.started_at.to_s(:hour) if day.started_at.present? %></td>
         <td><%= day.started_at.ceil_to(15.minutes).to_s(:min) if day.started_at.present? %></td>
         <td>
@@ -165,6 +169,7 @@
           <%end%>
         </td>
         <td><%= day.note %></td>
+<!--【所定外勤務】-->
         <td><%= day.over_time.to_s(:hour) if day.over_time.present?%></td>
         <td><%= day.over_time.to_s(:min) if day.over_time.present?%></td>
         <td>
@@ -181,6 +186,7 @@
       </tr>
       <%end%>
     </tbody>
+<!--AV,合計時間-->
     <tfoot>
       <tr>
         <td colspan = "2"><%= format_basic_time(@user.basic_time).to_f* @worked_sum %></td>

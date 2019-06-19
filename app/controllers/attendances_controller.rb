@@ -74,6 +74,12 @@ class AttendancesController < ApplicationController
       render '@user'
     end
   end
+  
+  def receive_overtime
+    @user = User.find(params[:id])
+    @overtime = Attendance.find(params[:id])
+  end
+  
   private
   
   def attendances_params
