@@ -6,6 +6,7 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
+    @users = User.all
     @instructor = User.where(instructor: true)
     if params[:ftime].nil?
       @ftime = Date.today.beginning_of_month

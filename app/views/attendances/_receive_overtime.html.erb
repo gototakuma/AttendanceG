@@ -1,5 +1,6 @@
 <!--contorller-->
 <% @user = User.find(params[:id])%>
+<% @users = User.all %>
 <% @attendance = Attendance.find(params[:id]) %>
 <% @instructor = User.where(instructor: true) %>
 <%  if params[:ftime].nil?
@@ -18,13 +19,14 @@
 %> 
 
 <!--views-->
-<% @dates.each do |day| %>
-  <%= form_for(@user, url: update_overtime_path(params: {id: @user.id})) do |f| %>
-  <% if day.over_time.present? %>
-    <div class="modal-dialog modal-lg">
+
+    <div class="modal-dialog modal-lg modal-dialog-center">
       <div class="modal-content">
         <div class="modal-header">
-          <h1>【<%= @user.name %>からの残業申請】</h1>
+          <% @users.each do |user| %>
+          <h1>【<%= user.name %>からの残業申請】</h1>
+          <%end%>
+          <%= form_for(@user, url: update_overtime_path(params: {id: @user.id})) do |f| %>
         </div><!--header-->
         <div class="modal-body">
         <table class="table-bordered table-striped table-condensed">
@@ -40,6 +42,8 @@
             <td>勤怠を確認</td>
           </tr>
         <tbody>
+          <% @dates.each do |day| %>
+          <% if day.over_time.present? %>
           <tr>
             <td><%= day.worked_on.to_s(:date) %></td>
             <td>
@@ -61,6 +65,8 @@
             <td><%= f.check_box :box %></td>
             <td><%= f.submit "確認", class: "btn btn-primary" %></td>
           </tr>
+          <%end%><!--if-->
+         <%end%><!-- @date.each -->
         </tbody>
         </table>
         <div class="modal-footer">
@@ -68,9 +74,9 @@
             <%= f.submit "変更を送信する", class: "btn btn-primary" %>
           </div><!--bottun-->
         </div><!--modal-footer-->
-        </div><!--modal-body-->
+       </div><!--modal-body-->
+       <%end%><!--form_for-->
       </div><!--content-->
     </div><!--dialog-->
-  <%end%><!--if-->
-  <%end%><!--form_for-->
-<%end%><!-- @date.each -->
+
+
