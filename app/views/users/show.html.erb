@@ -119,7 +119,7 @@
                     </div>
                   </td>
                   <td><div class="text_field"%><%= af.text_field :overtime_note,  class: "form-control" %></div></td>
-                  <td><%= f.collection_select :instructor,User.where(instructor: true),:id,:name%></td>
+                  <td><%= af.collection_select :instructor_name,User.where(instructor: true),:id,:name%></td>
                 </tr>
               </tbody>
             </table>  
@@ -179,8 +179,12 @@
         </td>
         <td><%= day.overtime_note %></td>
         <td>
-          <% @instructor.each do |instructor| %>
-            <%= instructor.name %>
+          <%if day.instructor_name == "3" %>
+            <%= "上長2に申請中" %>
+          <% elsif day.instructor_name =="2" %>
+            <%= "上長1に申請中" %>
+          <% elsif day.instructor_name =="4"%>
+            <%= "上長3に申請中" %>
           <%end%>
         </td>
       </tr>

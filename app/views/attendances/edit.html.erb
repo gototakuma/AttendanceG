@@ -52,7 +52,7 @@
             <%end%>
           </td>
           <td><%= af.text_field :note, class: "form-control" %></td>
-          <td><%= f.collection_select :instructor,User.where(instructor: true),:id,:name%></td>
+          <td><%= af.collection_select :instructor_name,User.where(instructor: true),:id,:name%></td>
         </tr>
       <% end %>
       <%end%>
