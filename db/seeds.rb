@@ -7,16 +7,21 @@ User.create!(name:  "管理者",
              admin: true,
              instructor: true)
 
-User.create!(name: "指示者",
-             email: "instructor@sample.com",
+3.times do |n|
+  name = "上長#{n+1}"
+  email = "instructor#{1+n}@sample.com"
+  code = 2+n
+  User.create!(name: name,
+             email: email,
              belongs: "取締役",
-             code: "2",
+             code: code,
              password: "password",
              password_confirmation: "password",
              admin: false,
              instructor: true)
+end
 
-59.times do |n|
+5.times do |n|
   name  = Faker::Name.name
   email = "email#{n+1}@sample.com"
   belongs = "営業部(#{n+1})"
