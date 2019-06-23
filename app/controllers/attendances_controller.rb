@@ -44,24 +44,26 @@ class AttendancesController < ApplicationController
   def update
     @user = User.find(params[:id])
     @instructor = User.where(instructor: true)
-    if attendances_invalid?
-      attendances_params.each do |id, item|
+      if attendances_invalid?
+       attendances_params.each do |id, item|
         attendance = Attendance.find(id)
         attendance.update_attributes(item)
+        end
+        flash[:success] = '勤怠情報を更新しました。'
+        redirect_to user_path(@user, params:{first_day: params[:date]})
+        return
+      else
+        flash[:danger] = "不正な時間入力がありました、再入力してください。"
+        redirect_to edit_attendances_path(@user, params[:date])
+        return
       end
-      flash[:success] = '勤怠情報を更新しました。'
-      redirect_to user_path(@user, params:{first_day: params[:date]})
-    else
-      flash[:danger] = "不正な時間入力がありました、再入力してください。"
-      redirect_to edit_attendances_path(@user, params[:date])
-    end
   end
   
   def update_overtime
     @user = User.find(params[:id])
     if overtime_params.each do |id,item|
       ot = Attendance.find(id)
-      ot.update_attributes(item)
+      ot.update_attributes!(item)
       flash[:success] = "残業申請しました"
       redirect_to @user
     end
@@ -93,15 +95,16 @@ class AttendancesController < ApplicationController
   def update_receive_overtime
     @user = User.find(params[:id])
     if receive_overtime_params.each do |id,item|
-      rot = Attendance.find(id)
-      rot.update_attributes(item)
-      flash[:success] = "申請処理完了しました。"
-      redirect_to @user
-      return
-    end
+     rot = Attendance.find(id)
+     rot.update_attributes(item) 
+     end
+     flash[:info] ="申請中です。チェック漏れがないかご確認ください。"
+     redirect_to @user
+     return
     else
-      render '@user'
-      return
+     flash[:danger] ="失敗"
+     redirect_to @user
+     return
     end
   end
   

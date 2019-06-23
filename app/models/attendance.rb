@@ -1,8 +1,9 @@
 class Attendance < ApplicationRecord
   belongs_to :user
   validates :worked_on, presence: true
+  validates :update_box, acceptance: true
   
-  enum approval: {"なし": 0, "申請中": 1, "承認": 2, "否認": 3}
+  enum approval: {'なし'=> 0, '申請中'=> 1, '承認'=> 2, '否認'=> 3}
   
   validate :finished_at_st_blank
     def finished_at_st_blank
@@ -19,4 +20,6 @@ class Attendance < ApplicationRecord
         end
       end
     end
+    
+    
 end  
