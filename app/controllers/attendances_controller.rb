@@ -57,11 +57,6 @@ class AttendancesController < ApplicationController
     end
   end
   
-  def edit_overtime
-    @user = User.find(params[:id])
-    @overtime = Attendance.find(params[:id])
-  end
-  
   def update_overtime
     @user = User.find(params[:id])
     if overtime_params.each do |id,item|
@@ -77,7 +72,37 @@ class AttendancesController < ApplicationController
   
   def receive_overtime
     @user = User.find(params[:id])
-    @overtime = Attendance.find(params[:id])
+    @users = User.all 
+    @attendance = Attendance.find(params[:id]) 
+    @instructor = User.where(instructor: true) 
+     if params[:ftime].nil?
+       @ftime = Date.today.beginning_of_month
+     else
+       @ftime = Date.parse(params[:ftime])
+     end
+    @ltime = @ftime.end_of_month
+    (@ftime..@ltime).each do |day|
+      unless @user.attendances.any?{|attendance| attendance.worked_on == day}
+        record = @user.attendances.build(worked_on: day)
+        record.save
+      end
+    end
+    @dates = user_attendances_month_date
+  end
+  
+  def update_receive_overtime
+    @user = User.find(params[:id])
+    if receive_overtime_params.each do |id,item|
+      rot = Attendance.find(id)
+      rot.update_attributes(item)
+      flash[:success] = "申請処理完了しました。"
+      redirect_to @user
+      return
+    end
+    else
+      render '@user'
+      return
+    end
   end
   
   private
@@ -88,5 +113,9 @@ class AttendancesController < ApplicationController
   
   def overtime_params
     params.permit(attendances: [:over_time,:overtime_note,:instructor_name])[:attendances]
+  end
+  
+  def receive_overtime_params
+    params.permit(attendances: [:approval,:update_box])[:attendances]
   end
 end

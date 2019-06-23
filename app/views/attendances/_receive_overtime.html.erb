@@ -22,7 +22,7 @@
 
     <div class="modal-dialog modal-lg modal-dialog-center">
       <div class="modal-content">
-        <%= form_for(@user, url: update_overtime_path(params: {id: @user.id})) do |f| %>
+        <%= form_for(@user, url: update_receive_overtime_path(params: {id: @user.id})) do |f| %>
         <% @users.each do |user| %>
         <div class="modal-header">
           <h1>【<%= user.name %>からの残業申請】</h1>
@@ -43,6 +43,7 @@
         <tbody>
           <% attendances = Attendance.where(user_id: user.id) %>
           <% attendances.each do |at| %>
+          <%= fields_for"attendances[]", at do |af| %>
           <% if at.over_time.present? %>
           <tr>
             <td><%= at.worked_on.to_s(:date) %></td>
@@ -61,11 +62,12 @@
             <td><%= format_basic_time(@user.finish_time) %></td>
             <td><%= overtimes_sub(at.over_time, @user.finish_time) %></td>
             <td><%= at.overtime_note %></td>
-            <td><%= f.collection_select :instructor,User.where(instructor: true),:id,:name%></td>
-            <td><%= f.check_box :box %></td>
+            <td><%= af.select :approval, Attendance.approvals.keys.to_a ,{} , class: "form-control"%></td>
+            <td><%=  %></td>
             <td><%= f.submit "確認", class: "btn btn-primary" %></td>
           </tr>
          <%end%><!--if-->
+         <%end%>
          <%end%><!--atttendance.each-->
         </tbody>
         </table>

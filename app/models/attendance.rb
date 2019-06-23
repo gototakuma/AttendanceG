@@ -2,6 +2,7 @@ class Attendance < ApplicationRecord
   belongs_to :user
   validates :worked_on, presence: true
   
+  enum approval: {"なし": 0, "申請中": 1, "承認": 2, "否認": 3}
   
   validate :finished_at_st_blank
     def finished_at_st_blank
