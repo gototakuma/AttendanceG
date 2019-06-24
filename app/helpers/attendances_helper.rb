@@ -13,7 +13,7 @@ module AttendancesHelper
     format("%.2f",(((finished_at - started_at)/ 60) / 60))
   end
   
-  def overtimes_sub(finish_time, over_time)
+  def overtimes_sub(over_time, finish_time)
     format("%.2f",(((over_time - finish_time)/ 60) / 60))
   end
   
