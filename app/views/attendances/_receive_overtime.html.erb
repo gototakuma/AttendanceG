@@ -24,11 +24,21 @@
       <div class="modal-content">
         <%= form_for(@user, url: update_receive_overtime_path(params: {id: @user.id})) do |f| %>
         <% @users.each do |user| %>
-        <div class="modal-header">
-          <h1>【<%= user.name %>からの残業申請】</h1>
-        </div><!--header-->
+        <% attendances = Attendance.where(user_id: user.id) %>
+        <% attendances.each do |at| %>
+        <% if at.over_time.present? %>
+          <% unless at.update_box == true %>
+              <h1>【<%= user.name %>からの残業申請】</h1>
+              <%break%>
+          <%end%>
+        <%end%> 
+        <%end%>
         <div class="modal-body">
-        <table class="table-bordered table-striped table-condensed">
+        <% attendances = Attendance.where(user_id: user.id) %>
+        <% attendances.each do |at| %>
+        <% if at.over_time.present? %>
+          <% unless at.update_box == true %>
+          <table class="table-bordered table-striped table-condensed">
           <tr>
             <td>日付</td>
             <td>曜日</td>
@@ -40,11 +50,15 @@
             <td>変更</td>
             <td>勤怠を確認</td>
           </tr>
+          <%break%>
+          <%end%>
+        <%end%>
+        <%end%>
         <tbody>
-          <% attendances = Attendance.where(user_id: user.id) %>
           <% attendances.each do |at| %>
           <%= fields_for"attendances[]", at do |af| %>
           <% if at.over_time.present? %>
+          <% unless at.update_box == true %>
           <tr>
             <td><%= at.worked_on.to_s(:date) %></td>
             <td>
@@ -68,12 +82,13 @@
               <%= af.submit "確認", class: "btn btn-primary" %>
             </td>
           </tr>
+          <%end%>
          <%end%><!--if-->
          <%end%>
          <%end%><!--atttendance.each-->
         </tbody>
         </table>
-         </div><!--modal-body-->
+        </div><!--modal-body-->
         <%end%><!--@users.each-->
         <div class="modal-footer">
           <div class="overtime_receive_bottun">
