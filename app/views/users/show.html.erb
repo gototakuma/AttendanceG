@@ -183,10 +183,10 @@
             <%= "残業承認済み" %>
           <% elsif day.approval == "否認" %>
             <%= "残業否認" %>
-          <% elsif day.instructor_name == "3" %>
-            <%= "上長2に申請中" %>
-          <% elsif day.instructor_name =="2" %>
+          <% elsif day.instructor_name == "2" %>
             <%= "上長1に申請中" %>
+          <% elsif day.instructor_name =="3" %>
+            <%= "上長2に申請中" %>
           <% elsif day.instructor_name =="4"%>
             <%= "上長3に申請中" %>
           <%end%>

@@ -26,6 +26,7 @@
         <% @users.each do |user| %>
         <% attendances = Attendance.where(user_id: user.id) %>
         <% attendances.each do |at| %>
+        <% if at.instructor_name.to_i == current_user.id %>
         <% if at.over_time.present? %>
           <% if at.update_box.blank? || at.approval == "申請中" %>
               <h1>【<%= user.name %>からの残業申請】</h1>
@@ -33,9 +34,11 @@
           <%end%>
         <%end%> 
         <%end%>
+        <%end%>
         <div class="modal-body">
         <% attendances = Attendance.where(user_id: user.id) %>
         <% attendances.each do |at| %>
+        <% if at.instructor_name.to_i == current_user.id %>
         <% if at.over_time.present? %>
           <% if at.update_box.blank? || at.approval == "申請中" %>
           <table class="table-bordered table-striped table-condensed">
@@ -54,9 +57,11 @@
           <%end%>
         <%end%>
         <%end%>
+        <%end%>
         <tbody>
           <% attendances.each do |at| %>
           <%= fields_for"attendances[]", at do |af| %>
+          <% if at.instructor_name.to_i == current_user.id %>
           <% if at.over_time.present?%>
           <% if at.update_box.blank? || at.approval == "申請中" %>
           <tr>
@@ -83,6 +88,7 @@
             </td>
           </tr>
           <%end%>
+         <%end%>
          <%end%><!--if-->
          <%end%><!--fields_for--!>
          <%end%><!--atttendance.each-->
