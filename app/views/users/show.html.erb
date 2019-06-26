@@ -131,9 +131,9 @@
             </div>
            </div>
           </div>
-<!--Modal終了-->
         </td>
         <%end%>
+<!--Modal終了-->
         <td width="5%"><%=day.worked_on.to_s(:date)%></td>
         <td width ="5%">
          <% week_name = %w[日 月 火 水 木 金 土] %>
@@ -179,7 +179,11 @@
         </td>
         <td><%= day.overtime_note %></td>
         <td>
-          <%if day.instructor_name == "3" %>
+          <% if day.approval == "承認" %>
+            <%= "残業承認済み" %>
+          <% elsif day.approval == "否認" %>
+            <%= "残業否認" %>
+          <% elsif day.instructor_name == "3" %>
             <%= "上長2に申請中" %>
           <% elsif day.instructor_name =="2" %>
             <%= "上長1に申請中" %>

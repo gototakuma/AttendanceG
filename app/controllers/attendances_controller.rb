@@ -94,6 +94,11 @@ class AttendancesController < ApplicationController
   
   def update_receive_overtime
     @user = User.find(params[:id])
+    if receive_overtime_params.nil?
+      flash[:danger] = "更新対象がありません"
+      redirect_to @user
+      return
+    else
      receive_overtime_params.each do |id,item|
      rot = Attendance.find(id)
      rot.update_attributes(item) 
@@ -101,6 +106,7 @@ class AttendancesController < ApplicationController
      flash[:info] ="申請中です。チェック漏れがないかご確認ください。"
      redirect_to @user
      return
+    end
   end
   
   private

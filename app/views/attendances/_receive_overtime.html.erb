@@ -27,7 +27,7 @@
         <% attendances = Attendance.where(user_id: user.id) %>
         <% attendances.each do |at| %>
         <% if at.over_time.present? %>
-          <% unless at.update_box == true %>
+          <% if at.update_box.blank? || at.approval == "申請中" %>
               <h1>【<%= user.name %>からの残業申請】</h1>
               <%break%>
           <%end%>
@@ -37,7 +37,7 @@
         <% attendances = Attendance.where(user_id: user.id) %>
         <% attendances.each do |at| %>
         <% if at.over_time.present? %>
-          <% unless at.update_box == true %>
+          <% if at.update_box.blank? || at.approval == "申請中" %>
           <table class="table-bordered table-striped table-condensed">
           <tr>
             <td>日付</td>
@@ -57,8 +57,8 @@
         <tbody>
           <% attendances.each do |at| %>
           <%= fields_for"attendances[]", at do |af| %>
-          <% if at.over_time.present? %>
-          <% unless at.update_box == true %>
+          <% if at.over_time.present?%>
+          <% if at.update_box.blank? || at.approval == "申請中" %>
           <tr>
             <td><%= at.worked_on.to_s(:date) %></td>
             <td>
@@ -84,7 +84,7 @@
           </tr>
           <%end%>
          <%end%><!--if-->
-         <%end%>
+         <%end%><!--fields_for--!>
          <%end%><!--atttendance.each-->
         </tbody>
         </table>
