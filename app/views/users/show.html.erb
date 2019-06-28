@@ -151,15 +151,39 @@
          <%end%>
         </td>
 <!--【実績】-->
-        <td><%= day.started_at.to_s(:hour) if day.started_at.present? %></td>
-        <td><%= day.started_at.ceil_to(15.minutes).to_s(:min) if day.started_at.present? %></td>
+        <td>
+          <% if day.approval == "承認" && day.started_be.present? %>
+            <%= day.started_be.to_s(:hour) %>
+          <% elsif  day.started_at.present?%>
+            <%= day.started_at.to_s(:hour)%>
+          <%end%>
+        </td>
+        <td>
+          <% if day.approval == "承認" && day.started_be.present? %>
+            <%= day.started_be.ceil_to(15.minutes).to_s(:min) %>
+          <% elsif day.started_at.present?%>
+            <%= day.started_at.ceil_to(15.minutes).to_s(:min) %>
+          <%end%>
+        </td>
         <td>
           <% if day.worked_on == Date.today && day.started_at.nil? %>
             <%= button_to "出社", user_attendances_path(@user), class: "btn btn-xs btn-primary" %>
           <%end%>
         </td>
-        <td><%= day.finished_at.to_s(:hour) if day.finished_at.present? %></td>
-        <td><%= day.finished_at.ceil_to(15.minutes).to_s(:min) if day.finished_at.present? %></td>
+        <td>
+          <% if day.approval == "承認" && day.finished_be.present? %>
+            <%= day.finished_be.to_s(:hour) %>
+          <% elsif day.finished_at.present?%>
+            <%= day.finished_at.to_s(:hour) %>
+          <%end%>
+        </td>
+        <td>
+          <% if day.approval == "承認" && day.finished_be.present? %>
+            <%= day.finished_be.ceil_to(15.minutes).to_s(:min)%>
+          <% elsif day.finished_at.present? %>
+            <%= day.finished_at.ceil_to(15.minutes).to_s(:min)%>
+          <%end%>
+        </td>
         <td>
           <% if day.worked_on == Date.today && day.started_at.present? && day.finished_at.nil? %>
             <%= button_to "退社", user_attendances_path(@user), class: "btn btn-xs btn-primary" %>
@@ -184,9 +208,9 @@
         <td><%= day.overtime_note %></td>
         <td>
           <% if day.approval == "承認" %>
-            <%= "残業承認済み" %>
+            <%= "承認済み" %>
           <% elsif day.approval == "否認" %>
-            <%= "残業否認" %>
+            <%= "否認" %>
           <% elsif day.instructor_name == 2 %>
             <%= "上長1に申請中" %>
           <% elsif day.instructor_name == 3 %>

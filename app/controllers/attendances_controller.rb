@@ -132,7 +132,7 @@ class AttendancesController < ApplicationController
   private
   
   def attendances_params
-    params.permit(attendances: [:started_at,:finished_at,:note,:approval,:instructor_name])[:attendances]
+    params.permit(attendances: [:started_be,:finished_be,:note,:instructor_name])[:attendances]
   end
   
   def overtime_params
