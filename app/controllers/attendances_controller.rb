@@ -35,6 +35,7 @@ class AttendancesController < ApplicationController
   
   def edit
     @user = User.find(params[:id])
+    @users = User.all
     @instructor = User.where(instructor: true)
     @ftime = Date.parse(params[:date])
     @ltime = @ftime.end_of_month
@@ -109,10 +110,29 @@ class AttendancesController < ApplicationController
     end
   end
   
+  def receive_attendance
+    @user = User.find(params[:id])
+    @users = User.all 
+    @attendance = Attendance.find(params[:id]) 
+    @instructor = User.where(instructor: true) 
+     if params[:ftime].nil?
+       @ftime = Date.today.beginning_of_month
+     else
+       @ftime = Date.parse(params[:ftime])
+     end
+    @ltime = @ftime.end_of_month
+    (@ftime..@ltime).each do |day|
+      unless @user.attendances.any?{|attendance| attendance.worked_on == day}
+        record = @user.attendances.build(worked_on: day)
+        record.save
+      end
+    end
+    @dates = user_attendances_month_date
+  end
   private
   
   def attendances_params
-    params.permit(attendances: [:started_at,:finished_at,:note])[:attendances]
+    params.permit(attendances: [:started_at,:finished_at,:note,:approval,:instructor_name])[:attendances]
   end
   
   def overtime_params

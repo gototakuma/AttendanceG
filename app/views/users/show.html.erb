@@ -31,8 +31,9 @@
     <% if @count > 0 %>
       <font color="red"><%= @count %>件の通知があります</font>
     <%end%><br>
-    <div id="user-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
-    <%= link_to "【勤怠変更申請のお知らせ】", '#' %><br>
+      <div id="user-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+    <%= link_to "【勤怠変更申請のお知らせ】", receive_attendance_path, remote: true %><br>
+      <div id="user-modal1" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
     <%= link_to "【所属長承認申請のお知らせ】",'#'%><br>
     <%= link_to "CSV", user_path(format: :csv), class: "btn btn-primary" %>
   <%end%>

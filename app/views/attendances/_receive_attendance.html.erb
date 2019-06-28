@@ -1,46 +1,54 @@
 <div class="modal-dialog modal-lg modal-dialog-center">
   <div class="modal-content">
     <%= form_for(@user, url: update_receive_overtime_path(params: {id: @user.id})) do |f| %>
-      <% @users.each do |user| %>
+        <% @users.each do |user| %>
         <% attendances = Attendance.where(user_id: user.id) %>
         <% attendances.each do |at| %>
         <% if at.instructor_name == current_user.id %>
-        <% if at.over_time.present? %>
           <% if at.update_box.blank? || at.approval == "申請中" %>
-              <h1>【<%= user.name %>からの残業申請】</h1>
+              <h1>【<%= user.name %>からの勤怠変更申請】</h1>
               <%break%>
           <%end%>
-        <%end%> 
         <%end%>
         <%end%>
         <div class="modal-body">
         <% attendances = Attendance.where(user_id: user.id) %>
         <% attendances.each do |at| %>
         <% if at.instructor_name == current_user.id %>
-        <% if at.over_time.present? %>
           <% if at.update_box.blank? || at.approval == "申請中" %>
           <table class="table-bordered table-striped table-condensed">
           <tr>
-            <td>日付</td>
-            <td>曜日</td>
-            <td>終了予定時間</td>
-            <td>指定勤務終了時間</td>
-            <td>時間外時間</td>
-            <td>業務処理内容</td>
-            <td>指示者確認㊞</td>
-            <td>変更</td>
-            <td>勤怠を確認</td>
+            <td rowspan="3">日付</td>
+            <td rowspan="3">曜日</td>
+            <td colspan="4">変更前</td>
+            <td colspan="4">変更後</td>
+            <td rowspan="3">備考</td>
+            <td rowspan="3">指示者確認㊞</td>
+            <td rowspan="3">変更</td>
+            <td rowspan="3">勤怠を確認</td>
           </tr>
+          <tr>
+            <td colspan="2">出社</td>
+            <td colspan="2">退社</td>
+            <td colspan="2">出社</td>
+            <td colspan="2">退社</td>
+          </tr>
+          <td>時</td>
+          <td>分</td>
+          <td>時</td>
+          <td>分</td>
+          <td>時</td>
+          <td>分</td>
+          <td>時</td>
+          <td>分</td>
           <%break%>
           <%end%>
-        <%end%>
         <%end%>
         <%end%>
         <tbody>
           <% attendances.each do |at| %>
           <%= fields_for"attendances[]", at do |af| %>
           <% if at.instructor_name == current_user.id %>
-          <% if at.over_time.present?%>
           <% if at.update_box.blank? || at.approval == "申請中" %>
           <tr>
             <td><%= at.worked_on.to_s(:date) %></td>
@@ -55,10 +63,15 @@
                 <%= str%>
               <%end%>
             </td>
-            <td><%= at.over_time.to_s(:hourmin)%></td>
-            <td><%= format_basic_time(@user.finish_time) %></td>
-            <td><%= overtimes_sub(at.over_time, @user.finish_time) %></td>
-            <td><%= at.overtime_note %></td>
+            <td><%= at.started_at.to_s(:hour) if at.started_at.present?  %></td>
+            <td><%= at.started_at.ceil_to(15.minutes).to_s(:min) if at.started_at.present? %></td>
+            <td><%= at.finished_at.to_s(:hour) if at.finished_at.present? %></td>
+            <td><%= at.finished_at.ceil_to(15.minutes).to_s(:min) if at.finished_at.present?%></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><%= at.note %></td>
             <td><%= af.select :approval, Attendance.approvals.keys.to_a ,{} , class: "form-control"%></td>
             <td><%= af.check_box :update_box%></td>
             <td>
@@ -66,7 +79,6 @@
             </td>
           </tr>
           <%end%>
-         <%end%>
          <%end%><!--if-->
          <%end%><!--fields_for--!>
          <%end%><!--atttendance.each-->
@@ -79,6 +91,6 @@
             <%= f.submit "変更を送信する", class: "btn btn-primary" %>
           </div><!--bottun-->
         </div><!--modal-footer-->
-    <%end%><!--form_for-->
-  </div><!--content-->
-</div><!--dialog-->
+        <%end%><!--form_for-->
+  </div>
+</div>
