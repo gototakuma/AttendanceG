@@ -28,7 +28,9 @@
   </div>
   <% if current_user.instructor? %>
     <%= link_to "【残業申請のお知らせ】", receive_overtime_path, remote: true%>
-      <%= @count %>件の通知があります<br>
+    <% if @count > 0 %>
+      <font color="red"><%= @count %>件の通知があります</font>
+    <%end%><br>
     <div id="user-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
     <%= link_to "【勤怠変更申請のお知らせ】", '#' %><br>
     <%= link_to "【所属長承認申請のお知らせ】",'#'%><br>
@@ -184,11 +186,11 @@
             <%= "残業承認済み" %>
           <% elsif day.approval == "否認" %>
             <%= "残業否認" %>
-          <% elsif day.instructor_name == "2" %>
+          <% elsif day.instructor_name == 2 %>
             <%= "上長1に申請中" %>
-          <% elsif day.instructor_name =="3" %>
+          <% elsif day.instructor_name == 3 %>
             <%= "上長2に申請中" %>
-          <% elsif day.instructor_name =="4"%>
+          <% elsif day.instructor_name == 4%>
             <%= "上長3に申請中" %>
           <%end%>
         </td>

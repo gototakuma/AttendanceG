@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @users = User.all
-    @count = Attendance.where(instructor_name: params[:instructor_name]).where(approval: "申請中").count
+    @count = Attendance.where(instructor_name: current_user.id).where(approval: "申請中").count
     @instructor = User.where(instructor: true)
     if params[:ftime].nil?
       @ftime = Date.today.beginning_of_month
