@@ -152,14 +152,14 @@
         </td>
 <!--【実績】-->
         <td>
-          <% if day.approval == "承認" && day.started_be.present? %>
+          <% if day.approval_at == "承認" && day.started_be.present? %>
             <%= day.started_be.to_s(:hour) %>
           <% elsif  day.started_at.present?%>
             <%= day.started_at.to_s(:hour)%>
           <%end%>
         </td>
         <td>
-          <% if day.approval == "承認" && day.started_be.present? %>
+          <% if day.approval_at == "承認" && day.started_be.present? %>
             <%= day.started_be.ceil_to(15.minutes).to_s(:min) %>
           <% elsif day.started_at.present?%>
             <%= day.started_at.ceil_to(15.minutes).to_s(:min) %>
@@ -171,14 +171,14 @@
           <%end%>
         </td>
         <td>
-          <% if day.approval == "承認" && day.finished_be.present? %>
+          <% if day.approval_at == "承認" && day.finished_be.present? %>
             <%= day.finished_be.to_s(:hour) %>
           <% elsif day.finished_at.present?%>
             <%= day.finished_at.to_s(:hour) %>
           <%end%>
         </td>
         <td>
-          <% if day.approval == "承認" && day.finished_be.present? %>
+          <% if day.approval_at == "承認" && day.finished_be.present? %>
             <%= day.finished_be.ceil_to(15.minutes).to_s(:min)%>
           <% elsif day.finished_at.present? %>
             <%= day.finished_at.ceil_to(15.minutes).to_s(:min)%>

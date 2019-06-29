@@ -140,6 +140,6 @@ class AttendancesController < ApplicationController
   end
   
   def receive_overtime_params
-    params.permit(attendances: [:approval,:update_box])[:attendances]
+    params.permit(attendances: [:approval,:update_box,:approval_at,:update_boxat])[:attendances]
   end
 end

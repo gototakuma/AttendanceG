@@ -6,7 +6,7 @@
         <% attendances.each do |at| %>
         <% if at.instructor_name == current_user.id %>
         <% if at.started_be.present? %>
-          <% if at.update_box.blank? || at.approval == "申請中" %>
+          <% if at.update_boxat.blank? || at.approval_at == "申請中" %>
               <h1>【<%= user.name %>からの勤怠変更申請】</h1>
               <%break%>
           <%end%>
@@ -18,7 +18,7 @@
         <% attendances.each do |at| %>
         <% if at.instructor_name == current_user.id %>
           <% if at.started_be.present? %>
-          <% if at.update_box.blank? || at.approval == "申請中" %>
+          <% if at.update_boxat.blank? || at.approval_at == "申請中" %>
           <table class="table-bordered table-striped table-condensed">
           <tr>
             <td rowspan="3">日付</td>
@@ -54,7 +54,7 @@
           <%= fields_for"attendances[]", at do |af| %>
           <% if at.instructor_name == current_user.id %>
           <% if at.started_be.present? %>
-          <% if at.update_box.blank? || at.approval == "申請中" %>
+          <% if at.update_boxat.blank? || at.approval_at == "申請中" %>
           <tr>
             <td><%= at.worked_on.to_s(:date) %></td>
             <td>
@@ -77,8 +77,8 @@
             <td><%= at.finished_be.to_s(:hour) if at.finished_be.present? %></td>
             <td><%= at.finished_be.ceil_to(15.minutes).to_s(:min) if at.finished_be.present?%></td>
             <td><%= at.note %></td>
-            <td><%= af.select :approval, Attendance.approvals.keys.to_a ,{} , class: "form-control"%></td>
-            <td><%= af.check_box :update_box%></td>
+            <td><%= af.select :approval_at, Attendance.approvals.keys.to_a ,{} , class: "form-control"%></td>
+            <td><%= af.check_box :update_boxat%></td>
             <td>
               <%= af.submit "確認", class: "btn btn-primary" %>
             </td>
