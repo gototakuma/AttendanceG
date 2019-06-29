@@ -28,11 +28,14 @@
   </div>
   <% if current_user.instructor? %>
     <%= link_to "【残業申請のお知らせ】", receive_overtime_path, remote: true%>
-    <% if @count > 0 %>
-      <font color="red"><%= @count %>件の通知があります</font>
+    <% if @count_overtime > 0 %>
+      <font color="red"><%= @count_overtime %>件の通知があります</font>
     <%end%><br>
       <div id="user-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
-    <%= link_to "【勤怠変更申請のお知らせ】", receive_attendance_path, remote: true %><br>
+    <%= link_to "【勤怠変更申請のお知らせ】", receive_attendance_path, remote: true %>
+    <% if @count_attendance > 0 %>
+      <font color="red"><%= @count_attendance %>件の通知があります</font>
+    <%end%><br>
       <div id="user-modal1" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
     <%= link_to "【所属長承認申請のお知らせ】",'#'%><br>
     <%= link_to "CSV", user_path(format: :csv), class: "btn btn-primary" %>
@@ -207,16 +210,15 @@
         </td>
         <td><%= day.overtime_note %></td>
         <td>
-          <% if day.approval == "承認" %>
-            <%= "承認済み" %>
-          <% elsif day.approval == "否認" %>
-            <%= "否認" %>
-          <% elsif day.instructor_name == 2 %>
-            <%= "上長1に申請中" %>
-          <% elsif day.instructor_name == 3 %>
-            <%= "上長2に申請中" %>
-          <% elsif day.instructor_name == 4%>
-            <%= "上長3に申請中" %>
+          <% if day.approval == "承認" || day.approval == "否認" %>
+            <%= "残業#{day.approval}" %>
+          <% elsif day.over_time.present? %>
+            <%= "残業:上長#{day.instructor_name-1}に申請中" %>
+          <%end%><br>
+          <% if day.approval_at == "承認" || day.approval_at == "否認" %>
+            <%= "勤怠#{day.approval_at}"%>
+          <% elsif day.started_be.present? %>
+            <%= "勤怠:上長#{day.instructor_nameat-1}に申請中" %>
           <%end%>
         </td>
       </tr>
