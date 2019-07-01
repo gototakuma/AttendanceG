@@ -37,7 +37,11 @@
       <font color="red"><%= @count_attendance %>件の通知があります</font>
     <%end%><br>
       <div id="user-modal1" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
-    <%= link_to "【所属長承認申請のお知らせ】",'#'%><br>
+    <%= link_to "【所属長承認申請のお知らせ】",receive_month_path, remote: true %>
+      <% if @count_month > 0 %>
+        <font color="red"><%= @count_month %>件の通知があります</font>
+      <%end%>
+      <div id="user-modal2" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div><br>
     <%= link_to "CSV", user_path(format: :csv), class: "btn btn-primary" %>
   <%end%>
   
@@ -232,22 +236,30 @@
         <td><%= working_times_sum(@total_seconds.ceil_to(15.minutes)) unless @total_seconds.nil? %></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td width="15%">
+          <%= form_for(@user, url: update_month_path(params: {id: @user.id})) do |f| %>
+            <% @dates.each do |day| %>
+              <%= fields_for "attendances[]", day do |af| %>
+                <% if day.approval_mo == "承認" %>
+                  <%= "所属長承認　済" %>
+                <%else%>
+                  <%= "所属長承認　未"%>
+                <%end%>
+                <%= af.collection_select :instructor_namemo,User.where(instructor: true),:id,:name, :include_blank => true, class: "form-control"%>
+                <%= af.date_select :month_date,:discard_day => true, :discard_year => true, class: "form-control"%>
+                <%= f.submit "申請", class: "btn btn-primary" %>
+              <%end%><!--fields_for-->
+            <%break%>
+            <%end%><!--day-->
+          <%end%><!--fomr_for-->
+        </td>
       </tr>
     </tfoot>
   </table>
-    <%= form_for(@user) do |f| %>
-      <p class="p">所属長承認</p>
-      <div class="selectpicker">
-        <select class="selectpicker">
-          <option></option>
-          <option>上長1</option>
-          <option>上長2</option>
-          <option>上長3</option>
-        </select>
-      </div>
-      <div class="petition">
-        <%= f.submit "申請", class: "btn btn-primary" %>
-      </div>
-    <%end%>
+    
 </div>
 

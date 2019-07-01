@@ -1,0 +1,55 @@
+<div class="modal-dialog modal-lg modal-dialog-center">
+  <div class="modal-content">
+    <%= form_for(@user,url: update_receive_path(params: {id: @user.id})) do |f| %>
+      <% @users.each do |user| %>
+        <% attendances = Attendance.where(user_id: user.id) %>
+          <% attendances.each do |at| %>
+            <% if at.instructor_namemo == current_user.id %>
+              <% if at.update_boxmo.blank? || at.approval_mo == "申請中"  %>
+                <h1>【<%= user.name %>からの所属長申請】</h1>
+                <%break%>
+              <%end%>
+          <%end%><!--if-->
+        <%end%><!--attendances-->
+        <div class="modal-body">
+          <% attendances = Attendance.where(user_id: user.id) %>
+          <% attendances.each do |at| %>
+            <% if at.instructor_namemo == current_user.id %>
+              <% if at.update_boxmo.blank? || at.approval_mo == "申請中"  %>
+              <table class="table-bordered table-striped table-condensed">
+                <tr>
+                  <td>月</td>
+                  <td>指示者確認㊞</td>
+                  <td>変更</td>
+                  <td>勤怠を確認する</td>
+                </tr>
+                <%break%>
+              <%end%>
+            <%end%><!--if at.instructor_namemo-->
+          <%end%><!--attendances.each-->
+          <tbody>
+            <% attendances.each do |at| %>
+              <%= fields_for"attendances[]", at do |af| %>
+              <% if at.instructor_namemo == current_user.id %>
+              <% if at.update_boxmo.blank? || at.approval_mo == "申請中"  %>
+                <tr>
+                 <td><%= at.month_date.strftime("%-m月") %></td>
+                 <td><%= af.select :approval_mo, Attendance.approvals.keys.to_a ,{} , class: "form-control"%></td>
+                 <td><%= af.check_box :update_boxmo%></td>
+                 <td><%= af.submit "確認", class: "btn btn-primary" %></td>
+                </tr>
+              <%end%>
+              <%end%><!--if-->
+              <%end%><!--fields_for-->
+              <%break%>
+            <%end%><!--attendances.each-->
+          </tbody>
+         </table>
+        </div><!--modal-body-->
+      <%end%><!--@users-->
+      <div class="modal-footer">
+        <%= f.submit "変更を送信する", class: "btn btn-primary" %>
+      </div>
+    <%end%><!--form_for-->
+  </div>
+</div>

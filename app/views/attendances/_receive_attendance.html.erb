@@ -1,12 +1,12 @@
 <div class="modal-dialog modal-lg modal-dialog-center">
   <div class="modal-content">
-    <%= form_for(@user, url: update_receive_overtime_path(params: {id: @user.id})) do |f| %>
+    <%= form_for(@user, url: update_receive_path(params: {id: @user.id})) do |f| %>
         <% @users.each do |user| %>
         <% attendances = Attendance.where(user_id: user.id) %>
         <% attendances.each do |at| %>
-        <% if at.instructor_name == current_user.id %>
+        <% if at.instructor_nameat == current_user.id %>
         <% if at.started_be.present? %>
-          <% if at.update_boxat.blank? || at.approval_at == "申請中" %>
+          <% if at.update_boxat.blank? || at.approval_at == "申請中"  %>
               <h1>【<%= user.name %>からの勤怠変更申請】</h1>
               <%break%>
           <%end%>
@@ -16,7 +16,7 @@
         <div class="modal-body">
         <% attendances = Attendance.where(user_id: user.id) %>
         <% attendances.each do |at| %>
-        <% if at.instructor_name == current_user.id %>
+        <% if at.instructor_nameat == current_user.id %>
           <% if at.started_be.present? %>
           <% if at.update_boxat.blank? || at.approval_at == "申請中" %>
           <table class="table-bordered table-striped table-condensed">
@@ -52,7 +52,7 @@
         <tbody>
           <% attendances.each do |at| %>
           <%= fields_for"attendances[]", at do |af| %>
-          <% if at.instructor_name == current_user.id %>
+          <% if at.instructor_nameat == current_user.id %>
           <% if at.started_be.present? %>
           <% if at.update_boxat.blank? || at.approval_at == "申請中" %>
           <tr>

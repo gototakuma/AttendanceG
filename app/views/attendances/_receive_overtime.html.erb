@@ -1,6 +1,6 @@
 <div class="modal-dialog modal-lg modal-dialog-center">
   <div class="modal-content">
-    <%= form_for(@user, url: update_receive_overtime_path(params: {id: @user.id})) do |f| %>
+    <%= form_for(@user, url: update_receive_path(params: {id: @user.id})) do |f| %>
       <% @users.each do |user| %>
         <% attendances = Attendance.where(user_id: user.id) %>
         <% attendances.each do |at| %>
@@ -61,9 +61,7 @@
             <td><%= at.overtime_note %></td>
             <td><%= af.select :approval, Attendance.approvals.keys.to_a ,{} , class: "form-control"%></td>
             <td><%= af.check_box :update_box%></td>
-            <td>
-              <%= af.submit "確認", class: "btn btn-primary" %>
-            </td>
+            <td><%= af.submit "確認", class: "btn btn-primary" %></td>
           </tr>
           <%end%>
          <%end%>
