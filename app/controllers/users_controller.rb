@@ -33,6 +33,12 @@ class UsersController < ApplicationController
     @users = User.all
   end
   
+  def import
+    User.import(params[:file])
+    redirect_to root_url
+    return
+  end
+  
   def new
     @user = User.new
   end

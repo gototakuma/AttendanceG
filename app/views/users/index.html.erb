@@ -1,6 +1,11 @@
 <% provide(:title,'一覧') %>
 <h1>ユーザー覧</h1>
 
+<%= form_tag({controller: "users", action: "import", method: "post"}, {multipart: true}) do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "オブジェクトを一括インポート" %>
+<% end %>
+
 <ul class="users">
   <% @users.each do |user| %>
     <li>
