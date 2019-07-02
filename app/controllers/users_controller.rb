@@ -86,6 +86,10 @@ class UsersController < ApplicationController
     end
   end
   
+  def attendances_now
+    @users = User.all
+  end
+  
   
   
   private

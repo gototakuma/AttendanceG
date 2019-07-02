@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   get '/edit-basic-info/:id', to: 'users#edit_basic_info', as: :basic_info
   patch 'update-basic-info', to: 'users#update_basic_info'
+  get 'users/attendances_now', to: 'users#attendances_now', as: :attendances_now
   patch 'users/:id/attendances/:id/update_overtime', to: 'attendances#update_overtime', as: :update_overtime #残業申請
   patch 'users/:id/attendances/:id/update_month', to: 'attendances#update_month', as: :update_month #所属長申請
   get 'users/:id/attendances/:id/receive_overtime', to: 'attendances#receive_overtime', as: :receive_overtime#残業申請のお知らせ

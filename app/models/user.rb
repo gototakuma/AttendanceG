@@ -22,7 +22,7 @@ class User < ApplicationRecord
   def self.updatable_attributes
     ["name","email","belongs","code","card_id",
     "password","password_confirmation",
-    "basic_time","work_time","finish_time"]
+    "basic_time","work_time","finish_time","admin","instructor"]
   end
 
 end

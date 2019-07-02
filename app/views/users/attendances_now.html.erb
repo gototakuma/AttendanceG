@@ -1,0 +1,22 @@
+<h1>出勤中社員一覧</h1>
+<table class="table-bordered table-striped table-condensed table-hover">
+  <thead>
+    <tr>
+      <td>社員番号</td>
+      <td>名前</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+    <% attendances = Attendance.where(user_id: user.id) %>
+    <% attendances.each do |at| %>
+    <% if Date.today && at.started_at.present? && at.finished_at.nil? %>
+    <tr>
+      <td><%= user.code %></td>
+      <td><%= user.name %></td>
+    </tr>
+    <%end%>
+    <%end%>
+    <%end%>
+  </tbody>
+</table>
