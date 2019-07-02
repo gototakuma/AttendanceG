@@ -7,7 +7,11 @@ ja:
         name: 名前
         email: メールアドレス
         belongs: 所属
+        code: 社員番号
+        number: 社員番号
+        card_id: カードID
         password: パスワード
         password_confirmation: パスワード(確認)
         basic_time: 基本時間
         work_time: 指定勤務時間
+        finish_time: 終了予定時間

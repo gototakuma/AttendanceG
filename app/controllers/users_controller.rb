@@ -30,8 +30,7 @@ class UsersController < ApplicationController
     
   
   def index
-    @q = User.ransack(params[:q])
-    @search = @q.result.page(params[:page])
+    @users = User.all
   end
   
   def new
@@ -86,7 +85,7 @@ class UsersController < ApplicationController
   private
   
   def user_params
-    params.require(:user).permit(:name,:email,:password,:password_confirmation,:belongs)
+    params.require(:user).permit(:name,:email,:password,:password_confirmation,:belongs,:code,:basic_time,:work_time,:finish_time,:card_id)
   end
   
   def basic_info_params
