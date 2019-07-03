@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-
-  get 'sessions/new'
-
   root 'first#home'
   get '/singup', to: 'users#new'
   get '/login', to: 'sessions#new'
@@ -23,6 +20,8 @@ Rails.application.routes.draw do
   resources :users do
     resources :attendances
   end
+  
+  resources :bases
   
   resources 'users', only: :index do
     collection { post :import }

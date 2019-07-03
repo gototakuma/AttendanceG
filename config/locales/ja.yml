@@ -2,6 +2,7 @@ ja:
   activerecord:
     models:
       user: ユーザー
+      base: 拠点
     attributes:
       user:
         name: 名前
@@ -15,3 +16,7 @@ ja:
         basic_time: 基本時間
         work_time: 指定勤務時間
         finish_time: 終了予定時間
+      base:
+        basenumber: 拠点番号
+        basename: 拠点名
+        baseattendance: 拠点種類

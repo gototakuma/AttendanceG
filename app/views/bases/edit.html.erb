@@ -1,0 +1,13 @@
+<h1>拠点編集</h1>
+<%= form_for(@base,  basis_path: :patch) do |f| %>
+  <%= f.label :basenumber %>
+  <%= f.text_field :basenumber, class: 'form-control' %>
+                
+  <%= f.label :basename %>
+  <%= f.text_field :basename, class: 'form-control' %>
+
+  <%= f.label :baseattendance %>
+  <%= f.text_field :baseattendance, class: 'form-control' %>
+          
+  <%= f.submit "保存", class: "btn btn-primary" %>
+<%end%>
