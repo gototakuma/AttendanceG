@@ -10,7 +10,7 @@
     <% @users.each do |user| %>
     <% attendances = Attendance.where(user_id: user.id) %>
     <% attendances.each do |at| %>
-    <% if Date.today && at.started_at.present? && at.finished_at.nil? %>
+    <% if Date.today && at.started_at.present? && at.finished_at.nil? && at.finished_be.nil? %>
     <tr>
       <td><%= user.code %></td>
       <td><%= user.name %></td>

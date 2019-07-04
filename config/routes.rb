@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get 'users/:id/attendances/:id/receive_overtime', to: 'attendances#receive_overtime', as: :receive_overtime#残業申請のお知らせ
   patch 'users/:id/attendances/:id/update_receive', to: 'attendances#update_receive', as: :update_receive #~申請のお知らせ(update)
   get 'users/:id/attendances/:date/edit', to: 'attendances#edit', as: :edit_attendances#勤怠を編集
+  get 'users/:id/attendances/:date/atlog', to: 'attendances#atlog', as: :atlog#勤怠修正ログ
   patch 'users/:id/attendances/:date/update', to: 'attendances#update', as: :update_attendances#勤怠を編集(update)
   get 'users/:id/attendances/:id/receive_attendance', to: 'attendances#receive_attendance', as: :receive_attendance #勤怠変更のお知らせ
   patch 'users/:id/attendances/:id/update_receive_attendance', to: 'attendances#update_receive_attendance', as: :update_receive_attendance #勤怠変更のお知らせ

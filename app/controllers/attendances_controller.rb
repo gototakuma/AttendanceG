@@ -42,6 +42,25 @@ class AttendancesController < ApplicationController
     @dates = user_attendances_month_date
   end
   
+  def atlog
+    @user = User.find(params[:id])
+    if params[:ftime].nil?
+      @ftime = Date.today.beginning_of_month
+    else
+      @ftime = Date.parse(params[:ftime])
+    end
+    @ltime = @ftime.end_of_month
+    (@ftime..@ltime).each do |day|
+      unless @user.attendances.any?{|attendance| attendance.worked_on == day}
+        record = @user.attendances.build(worked_on: day)
+        record.save
+      end
+    end
+    @ftime = Date.parse(params[:date])
+    @ltime = @ftime.end_of_month
+    @dates =  user_attendances_month_date
+  end
+  
   def update
     @user = User.find(params[:id])
     @instructor = User.where(instructor: true)

@@ -42,11 +42,12 @@
         <font color="red"><%= @count_month %>件の通知があります</font>
       <%end%>
       <div id="user-modal2" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div><br>
-    <%= link_to "CSV", user_path(format: :csv), class: "btn btn-primary" %>
   <%end%>
   
   <% if current_user|| current_user.admin? %>
+    <%= link_to "CSV", user_path(format: :csv), class: "btn btn-primary" %>
     <%= link_to "勤怠を編集", edit_attendances_path(@user, @ftime), class: "btn btn-primary"%>
+    <%= link_to "勤怠修正ログ", atlog_path(@user,@ftime), class: "btn btn-primary" %>
   <%end%>
   
   <table class="table-bordered table-striped table-condensed table-hover">
