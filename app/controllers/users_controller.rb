@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :logged_in_user, only: [:index,:show,:edit,:update,:destroy]
   before_action :admin_user, only: [:destroy,:edit_basic_info,:update_basic_info,:attendances_now,:index]
   before_action :correct_user, only: [:show,:edit,:update]
-  
+  before_action :admin_user_show, only: [:show]
   
   def show
     @user = User.find(params[:id])
@@ -124,5 +124,9 @@ class UsersController < ApplicationController
   
   def admin_user
     redirect_to(root_url) unless current_user.admin?
+  end
+  
+  def admin_user_show
+    redirect_to users_url if current_user.admin?
   end
 end
