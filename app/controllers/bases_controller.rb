@@ -1,4 +1,5 @@
 class BasesController < ApplicationController
+  before_action :admin_user, only: [:index,:new,:edit,:destroy]
   
   def new
     @base = Base.new
@@ -46,5 +47,10 @@ class BasesController < ApplicationController
   def base_params
     params.require(:base).permit(:basename,:basenumber,:baseattendance)
   end
+  
+  def admin_user
+    redirect_to(root_url) unless current_user.admin?
+  end
+  
 end
 

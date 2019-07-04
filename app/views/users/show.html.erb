@@ -131,7 +131,7 @@
                     </div>
                   </td>
                   <td><div class="text_field"%><%= af.text_field :overtime_note,  class: "form-control" %></div></td>
-                  <td><%= af.collection_select :instructor_name,User.where(instructor: true),:id,:name%></td>
+                  <td><%= af.collection_select :instructor_name,User.where(instructor: true).where.not(id: @user.id),:id,:name%></td>
                 </tr>
               </tbody>
             </table>  
@@ -250,7 +250,7 @@
                 <%else%>
                   <%= "所属長承認　未"%>
                 <%end%>
-                <%= af.collection_select :instructor_namemo,User.where(instructor: true),:id,:name, :include_blank => true, class: "form-control"%>
+                <%= af.collection_select :instructor_namemo,User.where(instructor: true).where.not(id: @user.id),:id,:name, :include_blank => true, class: "form-control"%>
                 <%= af.date_select :month_date,:discard_day => true, :discard_year => true, class: "form-control"%>
                 <%= f.submit "申請", class: "btn btn-primary" %>
               <%end%><!--fields_for-->

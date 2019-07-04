@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20190703034450) do
     t.datetime "basic_time", default: "2019-04-30 22:30:00"
     t.datetime "work_time", default: "2019-04-30 23:30:00"
     t.boolean "instructor", default: false
-    t.datetime "finish_time", default: "2019-07-02 09:00:00"
+    t.datetime "finish_time", default: "2019-07-04 09:00:00"
     t.integer "code"
     t.boolean "box"
     t.integer "number"

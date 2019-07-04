@@ -14,6 +14,7 @@ class Attendance < ApplicationRecord
       end
     end
     
+    
   validate :finished_at_started_faster
     def finished_at_started_faster
       if  started_at.present? && finished_at.present?
@@ -22,6 +23,21 @@ class Attendance < ApplicationRecord
         end
       end
     end
+  
+  validate :finished_be_st_blank
+  validate :finished_be_started_faster
+  
+  def finished_be_st_blank
+    errors.add(:started_be, "が必要です") if started_be.blank? && finished_be.present?
+  end
+  
+  def started_be_st_blank
+    errors.add(:finished_be, "が必要です") if started_be.present? && finished_be.blank?
+  end
     
-    
+  def finished_be_started_faster
+    if started_be.present? && finished_be.present?
+      errors.add(:started_be, "より早い退勤時間は無効です") if started_be > finished_be
+    end
+  end
 end  

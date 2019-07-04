@@ -1,4 +1,5 @@
 class AttendancesController < ApplicationController
+  before_action :correct_user
   def create
     @user = User.find(params[:user_id])
     @attendance = @user.attendances.find_by(worked_on: Date.today)
@@ -64,18 +65,15 @@ class AttendancesController < ApplicationController
   def update
     @user = User.find(params[:id])
     @instructor = User.where(instructor: true)
-      if attendances_invalid?
-       attendances_params.each do |id, item|
+      if attendances_params.each do |id, item|
         attendance = Attendance.find(id)
         attendance.update_attributes(item)
         end
-        flash[:success] = '勤怠情報を申請しました。'
+        flash[:info] = '勤怠情報を申請しました。記入漏れないか確認してください。'
         redirect_to user_path(@user, params:{first_day: params[:date]})
-        return
       else
         flash[:danger] = "不正な時間入力がありました、再入力してください。"
         redirect_to edit_attendances_path(@user, params[:date])
-        return
       end
   end
   
@@ -199,5 +197,13 @@ class AttendancesController < ApplicationController
   
   def receive_params
     params.permit(attendances: [:approval,:update_box,:approval_at,:update_boxat,:approval_mo,:update_boxmo])[:attendances]
+  end
+  
+  def correct_user
+    @user = User.find(params[:id])
+    unless current_user?(@user) || current_user.admin? 
+      flash[:danger] = "他人のデータは観覧できません"
+      redirect_to(root_url) 
+    end
   end
 end
