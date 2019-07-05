@@ -1,5 +1,5 @@
 class AttendancesController < ApplicationController
-  before_action :correct_user, onlu[:edit,:atlog]
+  before_action :correct_user, only:[:edit,:atlog]
   before_action :admin_user_show, only: [:edit,:atlog]
   
   def create
