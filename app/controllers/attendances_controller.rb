@@ -1,5 +1,6 @@
 class AttendancesController < ApplicationController
   before_action :correct_user
+  before_action :admin_user_show, only: [:edit,:atlog]
   def create
     @user = User.find(params[:user_id])
     @attendance = @user.attendances.find_by(worked_on: Date.today)
@@ -13,24 +14,6 @@ class AttendancesController < ApplicationController
       flash[:danger] = 'トラブルがあり、登録できませんでした。'
     end
     redirect_to @user
-  end
-  
-  def show
-    @user = User.find(params[:id])
-    if params[:ftime].nil?
-      @ftime = Date.today.beginning_of_month
-    else
-      @ftime = Date.parse(params[:ftime])
-    end
-    @ltime = @ftime.end_of_month
-    (@ftime..@ltime).each do |day|
-      unless @user.attendances.any?{|attendance| attendance.worked_on == day}
-        record = @user.attendances.build(worked_on: day)
-        record.save
-      end
-    end
-    @dates = user_attendances_month_date
-    @worked_sum = @dates.where.not(started_at: nil).count
   end
   
   
@@ -205,5 +188,9 @@ class AttendancesController < ApplicationController
       flash[:danger] = "他人のデータは観覧できません"
       redirect_to(root_url) 
     end
+  end
+  
+  def admin_user_show
+    redirect_to users_url if current_user.admin?
   end
 end
