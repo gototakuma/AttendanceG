@@ -1,6 +1,7 @@
 class AttendancesController < ApplicationController
-  before_action :correct_user
+  before_action :correct_user, onlu[:edit,:atlog]
   before_action :admin_user_show, only: [:edit,:atlog]
+  
   def create
     @user = User.find(params[:user_id])
     @attendance = @user.attendances.find_by(worked_on: Date.today)
@@ -48,14 +49,15 @@ class AttendancesController < ApplicationController
   def update
     @user = User.find(params[:id])
     @instructor = User.where(instructor: true)
-      if attendances_params.each do |id, item|
-        attendance = Attendance.find(id)
-        attendance.update_attributes(item)
-        end
+      if instructor_name_nil?
+          attendances_params.each do |id, item|
+            attendance = Attendance.find(id)
+            attendance.update_attributes(item)
+          end
         flash[:info] = '勤怠情報を申請しました。記入漏れないか確認してください。'
         redirect_to user_path(@user, params:{first_day: params[:date]})
       else
-        flash[:danger] = "不正な時間入力がありました、再入力してください。"
+        flash[:danger] = "上長を選択してください。"
         redirect_to edit_attendances_path(@user, params[:date])
       end
   end

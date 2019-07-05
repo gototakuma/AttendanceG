@@ -29,4 +29,13 @@ module AttendancesHelper
     @user.attendances.where('worked_on >= ? and worked_on <= ?', @ftime, @ltime).order('worked_on')
   end
   
+  def instructor_name_nil?
+    attendances = true
+    attendances_params.each do |id,item|
+      if item[:started_be].present? && item[:finished_be].present? && item[:instructor_nameat].blank?
+        attendances = false
+      end
+    end
+    return attendances
+  end
 end  
