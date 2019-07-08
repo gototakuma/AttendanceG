@@ -111,7 +111,8 @@ class UsersController < ApplicationController
   end
   
   def correct_user
-    @user = User.find(params[:id])
+   
+    @user = User.find_by(id: params[:id]) 
     unless current_user?(@user) || current_user.admin?
       flash[:danger] = "他人のデータは観覧できません"
       redirect_to(root_url) 
