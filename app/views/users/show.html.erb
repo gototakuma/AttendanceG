@@ -122,7 +122,7 @@
                   </td>
                   <td class="modal-date">
                     <div class="time_control">
-                      <%= af.time_select :over_time,:default => Time.now, class: "form-control" %>
+                      <%= af.time_select :over_time,:default =>day.worked_on, class: "form-control" %>
                     </div>
                   </td>
                   <td>
@@ -210,7 +210,7 @@
         <td><%= day.over_time.to_s(:min) if day.over_time.present?%></td>
         <td>
           <% if day.over_time.present?%>
-            <%= overtimes_sub(day.over_time, @user.finish_time) %>
+            <%=day.over_time.hour-@user.finish_time.hour%>.<%=(day.over_time.min-@user.finish_time.min).abs%>
           <%end%>
         </td>
         <td><%= day.overtime_note %></td>
