@@ -57,11 +57,11 @@
             </td>
             <td><%= at.over_time.to_s(:hourmin)%></td>
             <td><%= format_basic_time(@user.finish_time) %></td>
-            <td><%= overtimes_sub(at.over_time, @user.finish_time) %></td>
+            <td><%= at.over_time.hour-@user.finish_time.hour%>.<%=(at.over_time.min-@user.finish_time.min).abs%></td>
             <td><%= at.overtime_note %></td>
             <td><%= af.select :approval, Attendance.approvals.keys.to_a ,{} , class: "form-control"%></td>
             <td><%= af.check_box :update_box%></td>
-            <td><%= af.submit "確認", class: "btn btn-primary" %></td>
+            <td><%= link_to "確認",user, class: "btn btn-primary" %></td>
           </tr>
           <%end%>
          <%end%>

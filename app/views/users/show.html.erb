@@ -26,7 +26,7 @@
     </tr>
   </table>
   </div>
-  <% if current_user.instructor? %>
+  <% if current_user.instructor?  %>
     <%= link_to "【残業申請のお知らせ】", receive_overtime_path, remote: true%>
     <% if @count_overtime > 0 %>
       <font color="red"><%= @count_overtime %>件の通知があります</font>
