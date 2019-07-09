@@ -3,9 +3,9 @@
   <table class="table-bordered table-condensed">
     <tr>
       <td>
-        <%= link_to "←", user_path(params: {id: @user.id, ftime: @ftime.prev_month}), class: "btn btn-xs btn-primary" %>
+        <%= link_to_if(current_user?(@user), "←", user_path(params: {id: @user.id, ftime: @ftime.prev_month}), class: "btn btn-xs btn-primary" ){}%>
           &emsp;<%= @ftime.to_s(:year_month) %> 時間管理表 &emsp;
-        <%= link_to "→", user_path(params: {id: @user.id, ftime: @ftime.next_month}), class: "btn btn-xs btn-primary" %></td>
+        <%= link_to_if(current_user?(@user),"→", user_path(params: {id: @user.id, ftime: @ftime.next_month}), class: "btn btn-xs btn-primary"){}%></td>
       <td>
         指定勤務開始時間:<%= format_basic_time(@user.work_time) %><br>
         指定勤務終了時間:<%= format_basic_time(@user.finish_time) %>
@@ -27,27 +27,27 @@
   </table>
   </div>
   <% if current_user.instructor?  %>
-    <%= link_to "【残業申請のお知らせ】", receive_overtime_path, remote: true%>
-    <% if @count_overtime > 0 %>
+    <%= link_to_if(current_user?(@user), "【残業申請のお知らせ】", receive_overtime_path, remote: true) {}%>
+    <% if @count_overtime > 0 && current_user?(@user) %>
       <font color="red"><%= @count_overtime %>件の通知があります</font>
     <%end%><br>
       <div id="user-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
-    <%= link_to "【勤怠変更申請のお知らせ】", receive_attendance_path, remote: true %>
-    <% if @count_attendance > 0 %>
+    <%= link_to_if(current_user?(@user),"【勤怠変更申請のお知らせ】", receive_attendance_path, remote: true){}%>
+    <% if @count_attendance > 0 && current_user?(@user)%>
       <font color="red"><%= @count_attendance %>件の通知があります</font>
     <%end%><br>
       <div id="user-modal1" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
-    <%= link_to "【所属長承認申請のお知らせ】",receive_month_path, remote: true %>
-      <% if @count_month > 0 %>
+    <%= link_to_if(current_user?(@user), "【所属長承認申請のお知らせ】",receive_month_path, remote: true ){}%>
+      <% if @count_month > 0 && current_user?(@user) %>
         <font color="red"><%= @count_month %>件の通知があります</font>
       <%end%>
       <div id="user-modal2" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div><br>
   <%end%>
   
   <% if current_user|| current_user.admin? %>
-    <%= link_to "CSV", user_path(format: :csv), class: "btn btn-primary" %>
-    <%= link_to "勤怠を編集", edit_attendances_path(@user, @ftime), class: "btn btn-primary"%>
-    <%= link_to "勤怠修正ログ", atlog_path(@user,@ftime), class: "btn btn-primary" %>
+    <%= link_to_if(current_user?(@user), "CSV", user_path(format: :csv), class: "btn btn-primary"){} %>
+    <%= link_to_if(current_user?(@user), "勤怠を編集", edit_attendances_path(@user, @ftime), class: "btn btn-primary"){}%>
+    <%= link_to_if(current_user?(@user), "勤怠修正ログ", atlog_path(@user,@ftime), class: "btn btn-primary"){} %>
   <%end%>
   
   <table class="table-bordered table-striped table-condensed table-hover">
