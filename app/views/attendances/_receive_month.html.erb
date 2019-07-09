@@ -36,7 +36,7 @@
                  <td><%= at.month_date.strftime("%-m月") %></td>
                  <td><%= af.select :approval_mo, Attendance.approvals.keys.to_a ,{} , class: "form-control"%></td>
                  <td><%= af.check_box :update_boxmo%></td>
-                 <td><%= af.submit "確認", class: "btn btn-primary" %></td>
+                 <td><%= link_to "確認",user, class: "btn btn-primary" %></td>
                 </tr>
               <%end%>
               <%end%><!--if-->
