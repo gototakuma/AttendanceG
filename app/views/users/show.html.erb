@@ -27,19 +27,28 @@
   </table>
   </div>
   <% if current_user.instructor?  %>
-    <%= link_to_if(current_user?(@user), "【残業申請のお知らせ】", receive_overtime_path, remote: true) {}%>
     <% if @count_overtime > 0 && current_user?(@user) %>
+        <%= link_to_if(current_user?(@user), "【残業申請のお知らせ】", receive_overtime_path, class: "red" ,remote: true) {}%>
       <font color="red"><%= @count_overtime %>件の通知があります</font>
+    <%else%>
+      <%= link_to_if(current_user?(@user), "【残業申請のお知らせ】", receive_overtime_path, remote: true) {}%>
     <%end%><br>
       <div id="user-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
-    <%= link_to_if(current_user?(@user),"【勤怠変更申請のお知らせ】", receive_attendance_path, remote: true){}%>
+      
     <% if @count_attendance > 0 && current_user?(@user)%>
+      <%= link_to_if(current_user?(@user),"【勤怠変更申請のお知らせ】", receive_attendance_path, class: "red", remote: true){}%>
       <font color="red"><%= @count_attendance %>件の通知があります</font>
+    <%else%>
+      <%= link_to_if(current_user?(@user),"【勤怠変更申請のお知らせ】", receive_attendance_path, remote: true){}%>
     <%end%><br>
       <div id="user-modal1" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
-    <%= link_to_if(current_user?(@user), "【所属長承認申請のお知らせ】",receive_month_path, remote: true ){}%>
+      
+    
       <% if @count_month > 0 && current_user?(@user) %>
+        <%= link_to_if(current_user?(@user), "【所属長承認申請のお知らせ】",receive_month_path,class: "red", remote: true ){}%>
         <font color="red"><%= @count_month %>件の通知があります</font>
+      <%else%>
+        <%= link_to_if(current_user?(@user), "【所属長承認申請のお知らせ】",receive_month_path, remote: true ){}%>
       <%end%>
       <div id="user-modal2" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div><br>
   <%end%>
