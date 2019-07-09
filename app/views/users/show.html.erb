@@ -62,11 +62,17 @@
   <table class="table-bordered table-striped table-condensed table-hover">
     <thead>
     <tr>
-      <td rowspan="3">残業申請</td>
+      <% if current_user?(@user) %>
+        <td rowspan="3">残業申請</td>
+      <%end%>
       <td rowspan="3">日付</td>
       <td rowspan="3">曜日</td>
       <td colspan="8">【実績】</td>
-      <td colspan="8">所定外勤務</td>
+      <% if current_user?(@user) %>
+        <td colspan="8">所定外勤務</td>
+      <%else%>
+        <td colspan="5">所定外勤務</td>
+      <%end%>
     </tr>
     <tr>
       <td colspan="3">出社</td>
@@ -95,6 +101,7 @@
         <%= fields_for"attendances[]", day do |af| %>
       <tr>
 <!--Modal-->
+      <% if current_user?(@user) %>
         <td width="10%"> 
           <button type="button" class="btn btn-primary" data-toggle="modal" 
           data-target="#modal-<%=day.id %>" data-date="<%= day.worked_on.to_s(:date) %>">残業申請</button>
@@ -154,6 +161,7 @@
           </div>
         </td>
         <%end%>
+      <%end%>
 <!--Modal終了-->
         <td width="5%"><%=day.worked_on.to_s(:date)%></td>
         <td width ="5%">
@@ -183,7 +191,7 @@
           <%end%>
         </td>
         <td>
-          <% if day.worked_on == Date.today && day.started_at.nil? %>
+          <% if day.worked_on == Date.today && day.started_at.nil? && current_user?(@user)%>
             <%= button_to "出社", user_attendances_path(@user), class: "btn btn-xs btn-primary" %>
           <%end%>
         </td>
@@ -202,7 +210,7 @@
           <%end%>
         </td>
         <td>
-          <% if day.worked_on == Date.today && day.started_at.present? && day.finished_at.nil? %>
+          <% if day.worked_on == Date.today && day.started_at.present? && day.finished_at.nil? && current_user?(@user) %>
             <%= button_to "退社", user_attendances_path(@user), class: "btn btn-xs btn-primary" %>
           <%end%>
         </td>
@@ -250,6 +258,7 @@
         <td></td>
         <td></td>
         <td></td>
+        <% if current_user?(@user) %>
         <td width="15%">
           <%= form_for(@user, url: update_month_path(params: {id: @user.id})) do |f| %>
             <% @dates.each do |day| %>
@@ -267,6 +276,7 @@
             <%end%><!--day-->
           <%end%><!--fomr_for-->
         </td>
+        <%end%>
       </tr>
     </tfoot>
   </table>

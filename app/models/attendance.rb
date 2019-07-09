@@ -2,6 +2,8 @@ class Attendance < ApplicationRecord
   belongs_to :user
   validates :worked_on, presence: true
   validates :update_box, acceptance: true
+  validates :update_boxat, acceptance: true
+  validates :update_boxmo, acceptance: true
   
   enum approval: {'なし'=> 0, '申請中'=> 1, '承認'=> 2, '否認'=> 3}, _prefix: true
   enum approval_at: {'なし'=> 0, '申請中'=> 1, '承認'=> 2, '否認'=> 3}, _prefix: true
